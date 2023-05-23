@@ -1,8 +1,8 @@
 ---
 title: "Blog Post - Week One"
 author: "Aaron Null"
-date: "5/23/23"
-category: "Week One"
+date: "2023-5-23"
+categories: "Week One"
 ---
 
 # Week One
@@ -54,7 +54,6 @@ Iowa_Cities <- Cities_Occupancy %>%
 
 Iowa_Places <- rbind(Iowa_Cities, Iowa_Counties)
 ```
-
 
 ```{r}
 # Adding percent columns
