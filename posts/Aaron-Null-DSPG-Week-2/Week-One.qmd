@@ -223,7 +223,7 @@ This table shows the reported Hispanic/Latino population for 2020 for each of th
 
 I decided to turn my attention to Iowa at large and look at poverty rates.
 
-```{r}
+```{r, include = FALSE}
 # API Call
 poverty <- get_acs(geography = "block group",
                        variables = ("Poverty_income_individuals" = "B17021_002"),
@@ -231,7 +231,9 @@ poverty <- get_acs(geography = "block group",
                        year = 2021,
                        survey = "acs5",
                        geometry = TRUE)
+```
 
+```{r}
 # Plot
 ggplot(poverty) +
   geom_sf(aes(fill = estimate)) + # Fill the counties by population density
@@ -256,8 +258,7 @@ transport_counties <- get_acs(geography = "tract",
                        variables = transportList,
                        state = "IA",
                        year = 2021,
-                       survey = "acs5",
-                       geometry = TRUE)
+                       survey = "acs5")
 
 # Subset for relevant counties using str_detect()
 transport_counties2 <- transport_counties %>%
