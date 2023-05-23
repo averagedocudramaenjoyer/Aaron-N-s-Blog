@@ -2,6 +2,75 @@
 title: "Blog Post - Week One"
 author: "Aaron Null"
 date: "5/23/23"
-category: [Week One]
-editor: visual
+category: "Week One"
 ---
+
+# Week One
+
+We took some time to explore the TidyCensus package yesterday. Here are some interesting plots:
+
+```{r}
+#install.packages("tidycensus")
+#install.packages("tidyverse")
+library(tidycensus)
+library(tidyverse)
+library(stringr)
+```
+
+```{r}
+#Vacancy for county
+
+Counties_Occupancy <- get_decennial(
+  geography = "county",
+  year = 2020,
+  state = "IA",
+  variables = c(vacant_households = "H1_003N",
+                total_households = "H1_001N"),
+  output = "wide"
+)
+
+Iowa_Counties <- Counties_Occupancy %>%
+  filter(GEOID %in% c(19019, 19037, 19075, 19169))
+
+
+```
+
+```{r}
+#Vacancy for cities
+
+Cities_Occupancy <- get_decennial(
+  geography = "place",
+  year = 2020,
+  state = "IA",
+  variables = c(vacant_households = "H1_003N",
+                total_households = "H1_001N"),
+  output = "wide"
+)
+
+Iowa_Cities <- Cities_Occupancy %>%
+  filter(GEOID %in% c("1938100", "1956100", "1933195", "1973515"))
+
+# Combine
+
+Iowa_Places <- rbind(Iowa_Cities, Iowa_Counties)
+```
+
+
+```{r}
+# Adding percent columns
+
+Iowa_Places <- Iowa_Places %>%
+  mutate(percent = 100 * vacant_households/total_households,
+         occupied_percent = 100 - percent)
+
+Iowa_Places <- Iowa_Places %>%
+  mutate(total_percent = 100)
+
+# Plot
+
+Iowa_Places %>%
+  ggplot(aes(x = NAME)) +
+  geom_col(aes(y = total_percent, fill = "Occupied"), width = 0.8) + # add bars for total population
+  geom_col(aes(y = percent, fill = "Vacant"), width = 0.8) +
+  coord_flip()
+```
