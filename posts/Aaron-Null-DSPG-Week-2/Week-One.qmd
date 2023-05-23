@@ -7,7 +7,7 @@ category: "Week One"
 
 # Week One
 
-We took some time to explore the TidyCensus package yesterday. Here are some interesting plots:
+We took some time to explore the TidyquCensus package yesterday. Here are some interesting plots:
 
 ```{r}
 #install.packages("tidycensus")
