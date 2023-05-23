@@ -1,0 +1,7 @@
+---
+title: "Blog Post - Week One"
+author: "Aaron Null"
+date: "5/23/23"
+category: [Week One]
+editor: visual
+---
