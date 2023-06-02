@@ -204,23 +204,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="current-project-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="current-project-objectives">Current Project Objectives</h2>
+<section id="current-project-objectives" class="level1">
+<h1>Current Project Objectives</h1>
 <p>This week was primarily centered on clarifying the focus of our project, as well as on the retrieval of relevant sources of data. During the first part of the week, our group searched TidyCensus, the USDA and various other internet sources for data that could potentially be useful for whichever type of tool that we and our client decide on.</p>
-<p>After this, we met with our client and some of his associates at the the research park to discuss the direction of the project. We had them answer various questions on Mentimeter and showed them the list of datasets under consideration. They also gave us numerous suggestions about sources they were familiar with and told us that they would help grant us access to those of which were not immediately available to us.</p>
+<p>It could be said that we have started moving into the second phase of our project this week: data collection.</p>
+<p><img src="images/MicrosoftTeams-image-01.png" class="img-fluid"></p>
+<p>On Thursday, we met with our client and some of his associates at the the research park to discuss the direction of the project. We had them answer various questions on Mentimeter and showed them the list of datasets under consideration. They also gave us numerous suggestions about sources they were familiar with and told us that they would help grant us access to those of which were not immediately available to us.</p>
+<p><img src="images/IMG_1911.jpg" class="img-fluid"></p>
+<p><img src="images/IMG_1912.jpg" class="img-fluid"></p>
 <p>Here are some of the Mentimeter results from our meeting:</p>
 <p><img src="images/menti%201.jpg" class="img-fluid"></p>
 <p><img src="images/menti%20a.jpg" class="img-fluid"></p>
 <p><img src="images/menti%20%25.jpg" class="img-fluid"></p>
 <p>As we are wrapping up this week, we have now shifted our focus to compiling our selected data to our repository and filtering through sources that may not be as useful as others. We are continuing to think of ways to optimize this process, as well as remaining open to other sources of data or information that we have yet to discover. Here are some of the resources under consideration:</p>
+<p><img src="images/Acs_slide.jpg" class="img-fluid"></p>
+<p><img src="images/USDA_slide.jpg" class="img-fluid"></p>
+<p><img src="images/Econ_census_slide.jpg" class="img-fluid"></p>
 </section>
-<section id="works-in-progress" class="level2">
-<h2 class="anchored" data-anchor-id="works-in-progress">Works in Progress</h2>
-</section>
+<section id="works-in-progress" class="level1">
+<h1>Works in Progress</h1>
 <section id="aaron" class="level2">
 <h2 class="anchored" data-anchor-id="aaron">Aaron</h2>
 <p>This week has been less coding-centric than the previous week, as many of our efforts have been centered on uncovering useful sources of data. However, I have tried to work through ways to accelerate the time-consuming process of labeling and pushing CSVs of tables of ACS data.</p>
-<p>Here is a function that I’ve been using to speed the process up. It’s a data labeler function that takes “table”, “year” and “geography as arguments and outputs a labelled ACS5 data table by joining labels from the”load_variables()” function in TidyCensus by the common variable code on both dataframes.</p>
+<p>Here is an example of such a table: “Mode of Transport to Work by County 2021”</p>
+<p><img src="images/dataaaa.png" class="img-fluid"></p>
+<p>I have also written a function that I’ve been using to speed the process up. It’s a data labeler function that takes “table”, “year” and “geography as arguments and outputs a labelled ACS5 data table by joining labels from the”load_variables()” function in TidyCensus by the common variable code on both dataframes.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -348,20 +356,22 @@ Attaching package: 'dplyr'</code></pre>
 <section id="collected-some-acs-data" class="level3">
 <h3 class="anchored" data-anchor-id="collected-some-acs-data">Collected some ACS Data</h3>
 <p>Browsed for other possible useful sources to consider</p>
+<p><img src="images/srika_blog_image.png" class="img-fluid"></p>
 </section>
 </section>
-<section id="dspg-questions" class="level2">
-<h2 class="anchored" data-anchor-id="dspg-questions">DSPG Questions</h2>
+</section>
+<section id="dspg-questions" class="level1">
+<h1>DSPG Questions</h1>
 <ul>
 <li><p>What is the best way to scrape text off of a webpage with R?</p></li>
 <li><p>What are some general rules/best practices for writing efficient and reliable functions?</p></li>
 <li><p>What is differential privacy?</p></li>
 </ul>
-</section>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section"></h2>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
