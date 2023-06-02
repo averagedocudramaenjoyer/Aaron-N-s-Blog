@@ -1,0 +1,101 @@
+---
+title: "Grocery Weekly Wrap Up"
+author: "Aaron Null, Alex Cory, Srika Raja and Harun Celik"
+date: "2023-06-02"
+categories: "Week Three"
+---
+
+## Current Project Objectives
+
+This week was primarily centered on clarifying the focus of our project, as well as on the retrieval of relevant sources of data. During the first part of the week, our group searched TidyCensus, the USDA and various other internet sources for data that could potentially be useful for whichever type of tool that we and our client decide on.
+
+After this, we met with our client and some of his associates at the the research park to discuss the direction of the project. We had them answer various questions on Mentimeter and showed them the list of datasets under consideration. They also gave us numerous suggestions about sources they were familiar with and told us that they would help grant us access to those of which were not immediately available to us.
+
+
+
+
+As we are wrapping up this week, we have now shifted our focus to compiling our selected data to our repository and filtering through sources that may not be as useful as others. We are continuing to think of ways to optimize this process, as well as remaining open to other sources of data or information that we have yet to discover.
+
+## Works in Progress
+
+## Aaron
+
+This week has been less coding-centric than the previous week, as many of our efforts have been centered on uncovering useful sources of data. However, I have tried to work through ways to accelerate the time-consuming process of labeling and pushing CSVs of tables of ACS data.
+
+Here is a function that I've been using to speed the process up. It's a data labeler function that takes "table", "year" and "geography as arguments and outputs a labelled ACS5 data table by joining labels from the"load_variables()" function in TidyCensus by the common variable code on both dataframes.
+
+```{r, eval = TRUE}
+library(dplyr)
+library(tidycensus)
+library(stringr)
+library(readr)
+
+
+
+data_labeler_Iowa <- function(table, year, geography){
+  df <- tidycensus::get_acs(geography = geography,
+                table = table,
+                state = "IA",
+                year = year,
+                survey = "acs5")
+  
+  
+  vars <- tidycensus::load_variables(year, "acs5")
+  
+  vars <- vars %>%
+    dplyr::filter(stringr::str_detect(name, table))
+  
+  vars <- vars %>% 
+    dplyr::rename(variable = name)
+  
+  vars <- vars %>%
+    dplyr::select(variable, label)
+  
+  df2 <- merge(df,vars)
+  
+  df2 %>%
+    dplyr::arrange(GEOID)
+}
+
+Median_Household_Income_County_2021 <- data_labeler_Iowa("B19013", 2021, "county")
+```
+
+```{r}
+head(Median_Household_Income_County_2021)
+```
+
+Building on this, I tried to iterate through all of these arguments by using nested for loops and writing csvs automatically. However, for a reason I don't entirely understand, I haven't gotten it to work the way I should. It's possible that this has to do with the limitations of the API call and its speed within the loop.
+
+```{r}
+yearlist <- c(2009, 2012, 2016, 2021)
+geo_list <- c("county", "tract")
+Income_table_list <- c("B19013", "B19113", "B19202", "B19051", "B19055")
+acs_table <- NULL
+
+
+for(table in Income_table_list)
+
+  for(year in yearlist)
+  
+    for(geography in geo_list)
+    
+      acs_table <- tidycensus::get_acs(geography = geography,
+                                       table = table,
+                                       state = "IA",
+                                       year = year,
+                                       survey = "acs5")
+      
+      write_csv(acs_table, file = sprintf("%s_%s_%s", table, year, geography))
+```
+
+However, even if this didn't completely work, I learned a lot of useful information, such as the "sprintf" function that provides placeholders for strings that are named from iterating variables in loop, as well as how to call only necessary elements of a library into a function to prevent using too much memory/slowing run time.
+
+## DSPG Questions
+
+Treat this section as a place to put all of the different questions that team members have about the work they've been completing so far. This can be things like;
+
+-   How to best create a certain plot.
+-   What package/module might be the best fit for the task.
+-   An idea that can be discussed with the larger group for additional thoughts.
+
+## 
