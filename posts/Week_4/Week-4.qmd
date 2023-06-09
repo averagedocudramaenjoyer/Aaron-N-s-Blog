@@ -1,0 +1,102 @@
+---
+title: "Blog Post - Week 4"
+author: "Aaron Null"
+date: "2023-06-08"
+categories: "Week Three"
+---
+
+# Grocery Project:
+
+This week was centered on converting the sheets that our client gave us to useful functions for our project package. My functions were R translations of our clients sheet for estimating expenses of potential rural grocery stores.
+
+So far, there are 8 functions that are derived from the expense estimation sheet, yet it is still a work in progress. Here are the ones we have so far:
+
+Cost_of_Goods_Sold()
+
+Gross_Margin()
+
+Officer_Compensation()
+
+Employee_Wages()
+
+Other_Operating_Expense()
+
+Operating_Income_Loss()
+
+Annual_Rent()
+
+Interest_Expense()
+
+Many of these functions give different outputs based on the range that the input for total estimated revenue falls into. Here, the revenue ranges are listed in a table with the corresponding percentages for each variable (in decimal form):
+
+![](images/revenue_range_table.png)
+
+Therefore, some of our functions required a way to account for these differences. As it stands, this is dealt with through nested ifelse statements.
+
+```{r, eval=FALSE}
+
+Employee_Wages <- function(Total_Estimated_Revenue) {
+
+  ifelse(Total_Estimated_Revenue < 500000, stop("error: no data for this revenue range"),
+         percentage <- ifelse(Total_Estimated_Revenue < 999999.99, .0789,
+                              ifelse(Total_Estimated_Revenue < 2499999.99, .0934,
+                                     ifelse(Total_Estimated_Revenue < 4999999.99, .0751,
+                                            ifelse(Total_Estimated_Revenue < 24999999.99, .0975, .1083)))))
+
+
+
+  Total_Estimated_Revenue * percentage
+}
+```
+
+It's likely that more work needs to be done for error handling in functions like these.
+
+Here's a function that depends on some other functions in the package:
+
+```{r, eval = FALSE}
+Operating_Income_Loss <- function(Total_Estimated_Revenue) {
+  Goods_cost <- Cost_of_Goods_Sold(Total_Estimated_Revenue)
+  Officer_comp <- Officer_Compensation(Total_Estimated_Revenue)
+  Employee_Wages <- Employee_Wages(Total_Estimated_Revenue)
+  Other_Expense <- Other_Operating_Expense(Total_Estimated_Revenue)
+
+  Total_Estimated_Revenue - sum(Goods_cost, Officer_comp, Employee_Wages,
+                                Other_Expense)
+}
+```
+
+Most of the functions only take one argument: Total Estimated Revenue. This will be calculated from the functions made from our revenue estimation sheet (Srika). Other functions, such as Annual_Rent() or Interest_Expense(), have inputs that are dependent upon a user's individual scenario, such as the size of a loan or the rate of monthly rent for the building.
+
+There are still questions left to be answered, such as how to precisely estimate the cost of depreciation and how to determine the correct use life of certain assets. However, our team all made significant progress this week.
+
+# Coffee Talk
+
+I also learned a lot about text mining in R this week. I decided to compare the reviews from two gaming journalistic outlets for the past 5 Legend of Zelda games using certain text mining techniques. Some of the interesting libraries I learned about include:
+
+-   tm
+
+-   tidytext
+
+-   RWeka
+
+-   qdap
+
+-   plotrix
+
+-   rvest
+
+-   wordcloud
+
+-   syuzhet
+
+Here are some plots from the project:
+
+![Wordcloud of All Zelda Reviews](/images/zelda_bigram_better.png)
+
+![Pyramid Plot for Common Word Frequency Difference](/images/IGN_Gamespot_pyramid.png)
+
+![Sentiments for Latest Zelda Release (*Tears of the Kingdom*)](/images/totk_sentiments.png)
+
+Many of the techniques used for the project was from the Datacamp course "Text Mining with Bag of Words in R" and "Sentiment Analysis in R".
+
+Overall, today has been a pretty good week.
