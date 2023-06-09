@@ -5,11 +5,19 @@ date: "2023-06-02"
 categories: "Week Three"
 ---
 
-## Current Project Objectives
+# Current Project Objectives
 
 This week was primarily centered on clarifying the focus of our project, as well as on the retrieval of relevant sources of data. During the first part of the week, our group searched TidyCensus, the USDA and various other internet sources for data that could potentially be useful for whichever type of tool that we and our client decide on.
 
-After this, we met with our client and some of his associates at the the research park to discuss the direction of the project. We had them answer various questions on Mentimeter and showed them the list of datasets under consideration. They also gave us numerous suggestions about sources they were familiar with and told us that they would help grant us access to those of which were not immediately available to us.
+It could be said that we have started moving into the second phase of our project this week: data collection.
+
+![](images/MicrosoftTeams-image-01.png)
+
+On Thursday, we met with our client and some of his associates at the the research park to discuss the direction of the project. We had them answer various questions on Mentimeter and showed them the list of datasets under consideration. They also gave us numerous suggestions about sources they were familiar with and told us that they would help grant us access to those of which were not immediately available to us.
+
+![](images/IMG_1911.jpg)
+
+![](images/IMG_1912.jpg)
 
 Here are some of the Mentimeter results from our meeting:
 
@@ -21,13 +29,23 @@ Here are some of the Mentimeter results from our meeting:
 
 As we are wrapping up this week, we have now shifted our focus to compiling our selected data to our repository and filtering through sources that may not be as useful as others. We are continuing to think of ways to optimize this process, as well as remaining open to other sources of data or information that we have yet to discover. Here are some of the resources under consideration:
 
-## Works in Progress
+![](images/Acs_slide.jpg)
+
+![](images/USDA_slide.jpg)
+
+![](images/Econ_census_slide.jpg)
+
+# Works in Progress
 
 ## Aaron
 
 This week has been less coding-centric than the previous week, as many of our efforts have been centered on uncovering useful sources of data. However, I have tried to work through ways to accelerate the time-consuming process of labeling and pushing CSVs of tables of ACS data.
 
-Here is a function that I've been using to speed the process up. It's a data labeler function that takes "table", "year" and "geography as arguments and outputs a labelled ACS5 data table by joining labels from the"load_variables()" function in TidyCensus by the common variable code on both dataframes.
+Here is an example of such a table: "Mode of Transport to Work by County 2021"
+
+![](images/dataaaa.png)
+
+I have also written a function that I've been using to speed the process up. It's a data labeler function that takes "table", "year" and "geography as arguments and outputs a labelled ACS5 data table by joining labels from the"load_variables()" function in TidyCensus by the common variable code on both dataframes.
 
 ```{r, eval = TRUE}
 library(dplyr)
@@ -127,7 +145,9 @@ Understanding the market trends and margins for different departments in a rural
 
 Browsed for other possible useful sources to consider
 
-## DSPG Questions
+![](images/srika_blog_image.png)
+
+# DSPG Questions
 
 -   What is the best way to scrape text off of a webpage with R?
 
