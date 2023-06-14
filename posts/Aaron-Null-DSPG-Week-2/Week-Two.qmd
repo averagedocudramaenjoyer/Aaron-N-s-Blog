@@ -1,0 +1,301 @@
+---
+title: "Blog Post - Week 2"
+author: "Aaron Null"
+date: "2023-5-23"
+categories: "Week Two"
+---
+
+# Week Two
+
+We took some time to explore the TidyCensus package yesterday. Here are some interesting plots:
+
+```{r}
+#install.packages("tidycensus")
+#install.packages("tidyverse")
+library(tidycensus)
+library(tidyverse)
+library(stringr)
+library(patchwork)
+```
+
+```{r}
+#Vacancy for county
+
+Counties_Occupancy <- get_decennial(
+  geography = "county",
+  year = 2020,
+  state = "IA",
+  variables = c(vacant_households = "H1_003N",
+                total_households = "H1_001N"),
+  output = "wide"
+)
+
+Iowa_Counties <- Counties_Occupancy %>%
+  filter(GEOID %in% c(19019, 19037, 19075, 19169))
+
+
+```
+
+```{r}
+#Vacancy for cities
+
+Cities_Occupancy <- get_decennial(
+  geography = "place",
+  year = 2020,
+  state = "IA",
+  variables = c(vacant_households = "H1_003N",
+                total_households = "H1_001N"),
+  output = "wide"
+)
+
+Iowa_Cities <- Cities_Occupancy %>%
+  filter(GEOID %in% c("1938100", "1956100", "1933195", "1973515"))
+
+# Combine
+
+Iowa_Places <- rbind(Iowa_Cities, Iowa_Counties)
+```
+
+```{r}
+# Adding percent columns
+
+Iowa_Places <- Iowa_Places %>%
+  mutate(percent = 100 * vacant_households/total_households,
+         occupied_percent = 100 - percent)
+
+Iowa_Places <- Iowa_Places %>%
+  mutate(total_percent = 100)
+
+# Plot
+
+Iowa_Places %>%
+  ggplot(aes(x = NAME)) +
+  geom_col(aes(y = total_percent, fill = "Occupied"), width = 0.8) + 
+  geom_col(aes(y = percent, fill = "Vacant"), width = 0.8) +
+  coord_flip()
+```
+
+This is a graph representing the percentage of vacant housing units per location for both the counties and their respective cities. Slater City has the lowest percentage of vacancies while New Hampton City has the highest.
+
+I then looked at median earnings within the last 12 months:
+
+```{r}
+#API Call
+
+median_earnings <- get_acs(geography = "county",
+                       variables = "B08521_001",
+                       state = "IA",
+                       county = c("Buchanan County", "Chickasaw County", "Grundy County", "Story County"),
+                       year = 2021,
+                       survey = "acs5")
+
+median_earnings <- get_acs(geography = "county",
+                       variables = "B08521_001",
+                       state = "IA",
+                       county = c("Buchanan County", "Chickasaw County", "Grundy County", "Story County"),
+                       year = 2021,
+                       survey = "acs5")
+
+median_earnings
+```
+
+```{r}
+median_earnings %>%
+  ggplot(aes(x = NAME, y = estimate)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin = estimate - moe, ymax = estimate + moe), width = 0.2, position =    position_dodge(0.9)) +
+  ylab("Median Earnings") + 
+  xlab("County")
+```
+
+This graph represents the median of individuals' earnings within the last 12 months by county. Grundy County reports the highest while Buchanan County reports the lowest.
+
+Then I looked at the different languages spoken in each county:
+
+```{r}
+# List of language variables (provided by Chris Seeger)
+
+langList = c("Speak only English" = "C16001_002",   "Spanish" = "C16001_003",   "French, Haitian, or Cajun" = "C16001_006",   "German or other West Germanic languages" = "C16001_009",   "Russian, Polish, or other Slavic languages" = "C16001_012",   "Other Indo-European languages" = "C16001_015",   "Korean" = "C16001_018",   "Chinese (incl. Mandarin, Cantonese)" = "C16001_021",   "Vietnamese" = "C16001_024",   "Tagalog (incl. Filipino)" = "C16001_027",   "Other Asian and Pacific Island languages" = "C16001_030",   "Arabic" = "C16001_033",   "Other and unspecified languages" = "C16001_036")
+
+#API Call
+
+lang <- get_acs(geography = "county",
+                       variables = langList,
+                       state = "IA",
+                       year = 2021,
+                       survey = "acs5")
+
+# Subsetting data with string detection
+
+lang_counties <- lang %>%
+  filter(str_detect(NAME, "Buchanan|Chickasaw|Grundy|Story"))
+```
+
+```{r}
+# Plots
+plot_1 <- lang_counties %>%
+  ggplot(aes(x = NAME, y = estimate, fill = variable)) + 
+  geom_bar(stat = "identity", position = "fill") + 
+  xlab("County") +
+  ylab("Languages") +
+  coord_flip()
+
+plot_2 <- lang_counties %>%
+  filter(variable != "Speak only English") %>%
+  ggplot(aes(x = NAME, y = estimate, fill = variable)) + 
+  geom_bar(stat = "identity", position = "fill") + 
+  xlab("County") +
+  ylab("Language (Other Than English)") +
+  coord_flip()
+
+plot_1 
+```
+
+This plot shows the distribution of languages spoken in the four counties with English included.
+
+```{r}
+plot_2
+```
+
+This plot shows the language distribution excluding English. There is a great degree of variation from county to county in regards to the distribution of spoken languages other than English (which comprises a vast majority in all of the counties).
+
+Similar plots were made for race/ethnicity.
+
+```{r}
+# Created variable list
+
+raceList = c("White" = "P1_003N", "Black" = "P1_004N", "American Indian/Alaskan Native" = "P1_005N", "Asian" = "P1_006N", "Native Hawaiian/Pacific Islander" = "P1_007N", "Other" = "P1_008N")
+
+race_counties <- get_decennial(geography = "county",
+                       variables = raceList,
+                       state = "IA",
+                       county = c("Buchanan County", "Chickasaw County", "Grundy County", "Story County"),
+                       year = 2020)
+
+```
+
+```{r}
+plot_1 <- race_counties %>%
+  ggplot(aes(x = NAME, y = value, fill = variable)) + 
+  geom_bar(stat = "identity", position = "fill") + 
+  xlab("County") +
+  ylab("Race/Ethnicity") +
+  coord_flip()
+
+plot_2 <- race_counties %>%
+  filter(variable != "White") %>%
+  ggplot(aes(x = NAME, y = value, fill = variable)) + 
+  geom_bar(stat = "identity", position = "fill") + 
+  xlab("County") +
+  ylab("Race/Ethnicity (Other than White)") +
+  coord_flip()
+
+plot_1
+```
+
+This is a plot of the distribution of race/ethnicity for each of the 4 counties.
+
+```{r}
+plot_2
+```
+
+This is a plot of of the distribution of racial minorities in each county.
+
+It was also important to find the Hispanic/Latino population figures for each county, as it wasn't clear how that group was being incorporated into the data used in the plots above.
+
+```{r}
+# API Call
+hispanic_counties_wide <- get_decennial(geography = "county",
+                       variables = c("Hispanic/Latino" = "P2_002N", "Not Hispanic/Latino" = "P2_003N"),
+                       state = "IA",
+                       county = c("Buchanan County", "Chickasaw County", "Grundy County", "Story County"),
+                       year = 2020,
+                       output = "wide")
+
+# Table
+hispanic_counties_wide <- hispanic_counties_wide %>%
+  mutate(percentage = 100 * `Hispanic/Latino`/`Not Hispanic/Latino`)
+
+hispanic_counties_wide
+```
+
+This table shows the reported Hispanic/Latino population for 2020 for each of the 4 counties, along with percentages.
+
+I decided to turn my attention to Iowa at large and look at poverty rates.
+
+```{r, include = FALSE}
+# API Call
+poverty <- get_acs(geography = "block group",
+                       variables = ("Poverty_income_individuals" = "B17021_002"),
+                       state = "IA",
+                       year = 2021,
+                       survey = "acs5",
+                       geometry = TRUE)
+```
+
+```{r}
+# Plot
+ggplot(poverty) +
+  geom_sf(aes(fill = estimate)) + # Fill the counties by population density
+  scale_fill_distiller(palette = "YlOrBr") + # Use a color-blind friendly palette
+  labs(title = "Individuals Below the Poverty Line in Iowa",
+       subtitle = "Source: American Community Survey 2021",
+       fill = "People per Block Group") + # Add labels
+  theme_minimal()
+```
+
+This is a plot of the number of individuals per block group who earned low enough wages over 12 months to place them below the poverty line in 2021. The rate differs more or less uniformly around the state save for a few key regions.
+
+Finally, I looked at the reported mode of transport to work for each of the four counties. A similar stacked proportional bar graph was made to the ones for language and race above.
+
+```{r}
+# Compiled variable list for mode of transport
+transportList = c("Automobile" = "B08006_002","Bus" = "B08006_009", "Subway/Elevated Rail" = "B08006_010", "Train" = "B08006_011","Light Rail" = "B08006_012","Ferryboat" = "B08006_013", "Bicycle" = "B08006_014","Walked" = "B08006_015", "Taxi/Motorcycle/Other" = "B08006_016")
+
+# API Call
+
+transport_counties <- get_acs(geography = "tract",
+                       variables = transportList,
+                       state = "IA",
+                       year = 2021,
+                       survey = "acs5")
+
+# Subset for relevant counties using str_detect()
+transport_counties2 <- transport_counties %>%
+  filter(str_detect(NAME, "Buchanan|Chickasaw|Grundy|Story"))
+
+# Mutating 'county' column and labeling for each tract observation
+transport_small <- transport_counties2 %>%
+  mutate(county = ifelse(str_detect(NAME, "Buchanan"), "Buchanan County",
+                    ifelse(str_detect(NAME, "Chickasaw"), "Chickasaw County",
+                      ifelse(str_detect(NAME, "Grundy"), "Grundy County", "Story County"))))
+```
+
+```{r}
+plot_1 <- transport_small %>%
+  ggplot(aes(fill = variable, x = county, y = estimate)) +
+  geom_bar(stat = "identity", position = "fill") +
+  coord_flip() + 
+  ggtitle("Mode of Transport to Work")
+
+plot_2 <- transport_small %>%
+  filter(variable != "Automobile") %>%
+  ggplot(aes(fill = variable, x = county, y = estimate)) +
+  geom_bar(stat = "identity", position = "fill") +
+  coord_flip() +
+  ggtitle("Mode of Transport to Work (Other than Automobile)")
+
+plot_1
+```
+
+This is a plot of the reported mode of transport to work for each of the 4 counties. Commute by automobile overwhelmingly predominates.
+
+```{r}
+plot_2
+```
+
+This is a plot of the reported mode of transport for each county with automobile excluded. In two of the counties, "walking" is the majority response.
+
+## Conclusion
+
+I learned a lot by exploring this data, both about the census data itself and about different means of data wrangling in R. One of the biggest takeaways for me was being introduced to the "stringr" package and learning how to detect key words in strings. Along with that, I feel I have a clearer understanding of the "ifelse()" function and how it works. I also remembered how to add error bars to plots and how to make maps given the presence of the appropriate data. I'm looking forward to exploring these data sets even more and hope they will prove to be useful for our project.
