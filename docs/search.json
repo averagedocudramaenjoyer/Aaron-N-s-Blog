@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "Aaron N’s Blog",
     "section": "",
-    "text": "Blog Post - Week 4\n\n\n\n\n\n\n\nWeek Four\n\n\n\n\n\n\n\n\n\n\n\nJun 8, 2023\n\n\nAaron Null\n\n\n\n\n\n\n  \n\n\n\n\nGrocery Weekly Wrap Up\n\n\n\n\n\n\n\nWeek Three\n\n\n\n\n\n\n\n\n\n\n\nJun 2, 2023\n\n\nAaron Null, Alex Cory, Srika Raja and Harun Celik\n\n\n\n\n\n\n  \n\n\n\n\nBlog Post - Week Two\n\n\n\n\n\n\n\nWeek Two\n\n\n\n\n\n\n\n\n\n\n\nMay 23, 2023\n\n\nAaron Null\n\n\n\n\n\n\n  \n\n\n\n\nBlog Post - Week 4\n\n\n\n\n\n\n\nWeek One\n\n\n\n\n\n\n\n\n\n\n\nMay 20, 2023\n\n\nAaron Null\n\n\n\n\n\n\nNo matching items"
+    "text": "Blog Post - Week 4\n\n\n\n\n\n\n\nWeek Four\n\n\n\n\n\n\n\n\n\n\n\nJun 8, 2023\n\n\nAaron Null\n\n\n\n\n\n\n  \n\n\n\n\nGrocery Weekly Wrap Up\n\n\n\n\n\n\n\nWeek Three\n\n\n\n\n\n\n\n\n\n\n\nJun 2, 2023\n\n\nAaron Null, Alex Cory, Srika Raja and Harun Celik\n\n\n\n\n\n\n  \n\n\n\n\nBlog Post - Week Two\n\n\n\n\n\n\n\nWeek Two\n\n\n\n\n\n\n\n\n\n\n\nMay 23, 2023\n\n\nAaron Null\n\n\n\n\n\n\n  \n\n\n\n\nBlog Post - Week 1\n\n\n\n\n\n\n\nWeek One\n\n\n\n\n\n\n\n\n\n\n\nMay 20, 2023\n\n\nAaron Null\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/Aaron-Null-DSPG-Week-2/Week-Two.html",
@@ -30,9 +30,16 @@
   {
     "objectID": "posts/Aaron-Null-DSPG-Week-One/Week-One.html",
     "href": "posts/Aaron-Null-DSPG-Week-One/Week-One.html",
-    "title": "Blog Post - Week 4",
+    "title": "Blog Post - Week 1",
     "section": "",
-    "text": "Week One\nThis week was all about becoming more familiar with the data science workflow and understanding our projects. We also became acquainted with the history of DSPG and some of its past projects.\nWe started the first day doing an exercise where we had 90 minutes to analyze flight data from the Des Moines airport.\n\n\n\nTotal Number of Flight by Airline (Following Thanksgiving 2021)\n\n\n\n\n\nNumber of Des Moines Flights by Airline Across Time (Following Thanksgiving 2021)\n\n\nThis exercise was a good warm-up into using ggplot2 again and remembering which figures and summary statistics to prioritize reporting.\nWe also listened to many interesting speakers, including Chris, Sadat and Cass Dorius at the research park."
+    "text": "This week was all about becoming more familiar with the data science workflow and understanding our projects. We also became acquainted with the history of DSPG and some of its past projects.\nWe started the first day doing an exercise where we had 90 minutes to analyze flight data from the Des Moines airport.\n\n\n\nTotal Number of Flight by Airline (Following Thanksgiving 2021)\n\n\n\n\n\nNumber of Des Moines Flights by Airline Across Time (Following Thanksgiving 2021)\n\n\nThis exercise was a good warm-up into using ggplot2 again and remembering which figures and summary statistics to prioritize reporting.\nWe also listened to many interesting speakers, including Chris, Sadat and Cass Dorius at the research park.\n\n\n\nGithub Concepts\nUnderstanding Data Visualization"
+  },
+  {
+    "objectID": "posts/Aaron-Null-DSPG-Week-One/Week-One.html#datacamp",
+    "href": "posts/Aaron-Null-DSPG-Week-One/Week-One.html#datacamp",
+    "title": "Blog Post - Week 1",
+    "section": "",
+    "text": "Github Concepts\nUnderstanding Data Visualization"
   },
   {
     "objectID": "posts/Weekly_Wrap_Up_Week_3/Weekly_Wrap_Up_Week-3.html",

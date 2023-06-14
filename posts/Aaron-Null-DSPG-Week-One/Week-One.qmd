@@ -1,0 +1,26 @@
+---
+title: "Blog Post - Week 1"
+author: "Aaron Null"
+date: "2023-05-20"
+categories: "Week One"
+---
+
+# Week One
+
+This week was all about becoming more familiar with the data science workflow and understanding our projects. We also became acquainted with the history of DSPG and some of its past projects.
+
+We started the first day doing an exercise where we had 90 minutes to analyze flight data from the Des Moines airport.
+
+![Total Number of Flight by Airline (Following Thanksgiving 2021)](/posts/Aaron-Null-DSPG-Week-One/images/flight_bar.jpg)
+
+![Number of Des Moines Flights by Airline Across Time (Following Thanksgiving 2021)](/posts/Aaron-Null-DSPG-Week-One/images/flight_line.jpg)
+
+This exercise was a good warm-up into using ggplot2 again and remembering which figures and summary statistics to prioritize reporting.
+
+We also listened to many interesting speakers, including Chris, Sadat and Cass Dorius at the research park.
+
+## Datacamp
+
+-   *Github Concepts*
+
+-   *Understanding Data Visualization*
