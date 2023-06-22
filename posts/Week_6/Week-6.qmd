@@ -1,0 +1,16 @@
+---
+title: "Grocery Team Weekly Wrap-Up: Week 6"
+author: "Aaron Null, Alex Cory, Srika Raja and Harun Celik"
+date: "2023-06-16"
+categories: "Week Six"
+---
+
+# Summary
+
+The primary focus for this week was understanding how all of the work that we did for our particular sections of the project will fit together into a seamless whole. In order to do that, we have been learning more about each other's work done toward the beginning of the program and thinking about ways to connect them in the context of the final application.
+
+We also spent the first part of the week collecting data for the WINVEST project. On Monday we visited Grundy Center and New Hampton, while on Tuesday we visited Independence, all of which were northeast of Ames. We spent time walking through residential areas taking pictures of houses and filling out forms to be compiled into a dataset that will be analyzed later for the purpose of determing which of the areas will qualify for a grant from the state. We saw many interesting sites and learned a lot of doing field work for data science.
+
+## Current Project Objectives
+
+One important feature of the project is how we measure market size. This involves getting an estimate of the population around a user-defined point in the application. We have been working on the shape and orientation of this area, as well as how to load only the data that we need in response to user-input. Our estimated customer base in our project is influenced by multiple factors, including the presence of dollar stores, other grocery stores, whether the population is urban or rural and other things. This data ultimately factors into our calculation for estimated revenue of the proposed store, which factors into the calculation of profitability. As we get closer and closer to our deadline, we are thinking more and more about our final tool and what will and will not make it into the final draft. We are hopeful that we will be able to balance user-friendliness with depth to make a tool that's easy to use and valuable for our users.
