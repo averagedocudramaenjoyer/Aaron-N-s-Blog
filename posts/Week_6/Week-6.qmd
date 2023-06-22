@@ -11,6 +11,12 @@ The primary focus for this week was understanding how all of the work that we di
 
 We also spent the first part of the week collecting data for the WINVEST project. On Monday we visited Grundy Center and New Hampton, while on Tuesday we visited Independence, all of which were northeast of Ames. We spent time walking through residential areas taking pictures of houses and filling out forms to be compiled into a dataset that will be analyzed later for the purpose of determing which of the areas will qualify for a grant from the state. We saw many interesting sites and learned a lot of doing field work for data science.
 
-## Current Project Objectives
+# Current Project Objectives
 
 One important feature of the project is how we measure market size. This involves getting an estimate of the population around a user-defined point in the application. We have been working on the shape and orientation of this area, as well as how to load only the data that we need in response to user-input. Our estimated customer base in our project is influenced by multiple factors, including the presence of dollar stores, other grocery stores, whether the population is urban or rural and other things. This data ultimately factors into our calculation for estimated revenue of the proposed store, which factors into the calculation of profitability. As we get closer and closer to our deadline, we are thinking more and more about our final tool and what will and will not make it into the final draft. We are hopeful that we will be able to balance user-friendliness with depth to make a tool that's easy to use and valuable for our users.
+
+## Aaron
+
+One important concern for the expenses component of the project is the question of modularity, or the freedom given to the user to affect the calculations performed in the server. The functions used in this project to calculate expenses for potential grocery stores do so by providing different percentages of revenue spent on expenses based off of how high the total estimated revenue input is at the beginning. The original excel sheet establishes 5 distinct ranges that each have different percentages of the revenue across the different line items of the sheet.
+
+![Percentages given for different revenue ranges/store sizes (from Bizminer)](/posts/Week_6/images/percentages blog.png)
