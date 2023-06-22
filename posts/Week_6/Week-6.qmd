@@ -1,7 +1,7 @@
 ---
 title: "Grocery Team Weekly Wrap-Up: Week 6"
 author: "Aaron Null, Alex Cory, Srika Raja and Harun Celik"
-date: "2023-06-16"
+date: "2023-06-22"
 categories: "Week Six"
 ---
 
