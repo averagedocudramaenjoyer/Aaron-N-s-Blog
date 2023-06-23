@@ -99,3 +99,23 @@ address
 This package proved to be useful for making a basic function that gets the list of nearby counties within a radius of a set of coordinates. However, the biggest flaw is that the "county" column isn't accurate; it lists the name of the country instead. For our purposes, this was a significant roadblock, as having the county of a point makes retrieving data from TidyCensus a lot easier.
 
 More on the process of geocoding will be found below.
+
+## Grocery Survey: First Impressions
+
+We have also been looking over the results of a survey conducted by Iowa State Extension and Outreach (sponsored by AgMRC) that asked owners and senior managers of independently-owned rural grocery stores throughout Iowa a series of questions about their store's performance, selection and design, as well as the top challenges they face in keeping their store profitable. The survey divided Iowa into 3 regions and examined the survey results accordingly:
+
+![Three regions analyzed by the survey.](/posts/Week_6/images/iowa_regions.png){width="626"}
+
+One issue with the survey was the low response rate: only 95 out of 671 independent grocers responded (14.2%). However, the findings might still be useful to look at for our purposes.
+
+Here are some charts I found interesting:
+
+![Top challenges faced by small grocers in Iowa](/posts/Week_6/images/challenges.png){width="628"}
+
+![Difficulties in purchasing and selling local products](/posts/Week_6/images/selling_local.png){width="641"}
+
+There is much more potentially useful information, such as information about the most frequently found unique assets of stores and the specific types of local products most frequently bought according to region, shown here:
+
+![Type of local foods purchased by region](/posts/Week_6/images/local_foods_bought.png){width="587"}
+
+Overall, this survey may help us provide useful information to the users of our tool and can help grant us perspective on how well the functionality of our tools maps onto the ground truth of what is really going on with rural grocery stores in Iowa. I found it to be a very interesting and useful resource.
