@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -151,8 +185,8 @@ ul.task-list li input[type="checkbox"] {
 <figcaption class="figure-caption">Lunchtime at Grundy Center</figcaption>
 </figure>
 </div>
-<section id="summary" class="level1">
-<h1>Summary</h1>
+<section id="overview" class="level1">
+<h1>Overview</h1>
 <p>The primary focus for this week was understanding how all of the work that we did for our particular sections of the project will fit together into a seamless whole. In order to do that, we have been learning more about each other’s work done toward the beginning of the program and thinking about ways to connect them in the context of the final application.</p>
 <p>We also spent the first part of the week collecting data for the WINVEST project. On Monday we visited Grundy Center and New Hampton, while on Tuesday we visited Independence, all of which were northeast of Ames. We spent time walking through residential areas taking pictures of houses and filling out forms to be compiled into a dataset that will be analyzed later for the purpose of determing which of the areas will qualify for a grant from the state. We saw many interesting sites and learned a lot of doing field work for data science.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -173,15 +207,88 @@ ul.task-list li input[type="checkbox"] {
 <p>One important feature of the project is how we measure market size. This involves getting an estimate of the population around a user-defined point in the application. We have been working on the shape and orientation of this area, as well as how to load only the data that we need in response to user-input. Our estimated customer base in our project is influenced by multiple factors, including the presence of dollar stores, other grocery stores, whether the population is urban or rural and other things. This data ultimately factors into our calculation for estimated revenue of the proposed store, which factors into the calculation of profitability. As we get closer and closer to our deadline, we are thinking more and more about our final tool and what will and will not make it into the final draft. We are hopeful that we will be able to balance user-friendliness with depth to make a tool that’s easy to use and valuable for our users.</p>
 <section id="aaron" class="level2">
 <h2 class="anchored" data-anchor-id="aaron">Aaron</h2>
+<section id="the-percentage-question" class="level3">
+<h3 class="anchored" data-anchor-id="the-percentage-question">The Percentage Question</h3>
 <p>One important concern for the expenses component of the project is the question of modularity, or the freedom given to the user to affect the calculations performed in the server. The functions used in this project to calculate expenses for potential grocery stores do so by providing different percentages of revenue spent on expenses based off of how high the total estimated revenue input is at the beginning. The original excel sheet establishes 5 distinct ranges that each have different percentages of the revenue across the different line items of the sheet.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../..\posts/Week_6/images/percentages blog.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Percentages given for different revenue ranges/store sizes (from Bizminer)</figcaption>
+<p><img src="../..\posts/Week_6/images/percentages_blog-01.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Percentages for categories of expenses/income across revenue ranges/store sizes (Bizminer)</figcaption>
 </figure>
+</div>
+<p>These ranges can be thought of as stand-ins for the different sizes of grocery stores. When a store takes in a certain amount of revenue, the function assigns a budget percentage corresponding to the assumed size of the store.</p>
+<p>As it stands now, many of the functions make use of nested “ifelse” statements in order to find the budget percentage of an expense or a source of income and multiply it by the total estimated revenue. For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Employee_Wages <span class="ot">&lt;-</span> <span class="cf">function</span>(Total_Estimated_Revenue) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(Total_Estimated_Revenue <span class="sc">&lt;</span> <span class="dv">500000</span>, <span class="fu">stop</span>(<span class="st">"error: no data for this revenue range"</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>         percentage <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(Total_Estimated_Revenue <span class="sc">&lt;</span> <span class="fl">999999.99</span>, .<span class="dv">0789</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">ifelse</span>(Total_Estimated_Revenue <span class="sc">&lt;</span> <span class="fl">2499999.99</span>, .<span class="dv">0934</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                                     <span class="fu">ifelse</span>(Total_Estimated_Revenue <span class="sc">&lt;</span> <span class="fl">4999999.99</span>, .<span class="dv">0751</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                                            <span class="fu">ifelse</span>(Total_Estimated_Revenue <span class="sc">&lt;</span> <span class="fl">24999999.99</span>, .<span class="dv">0975</span>, .<span class="dv">1083</span>)))))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  Total_Estimated_Revenue <span class="sc">*</span> percentage</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The functions gives the user an error message if they enter a revenue amount under $500,000 dollars due to there being no data at that range.</p>
+</section>
+<section id="the-linearity-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-linearity-problem">The Linearity Problem</h3>
+<p>Many of the functions derived from the excel sheet “Estimating Expenses” have been written to take the total estimated revenue as an input and return the dollar amount of a certain cost in accordance to the average percentage of revenue spent on that cost for stores of a similar size. For example, a store that takes in $1,000,000 and a store that takes in $2,000,000 share common percentages for costs such as employee wages and officer compensation. This broad assignment of one percentage based on a large revenue window also applies to the function for calculating gross margin, or the amount of funds left over after accounting for the cost of goods for the store.</p>
+<p>However, since most of these functions receive the same input of total estimated revenue and all of the percentages for the expenses are bundled together for the same window of revenue, this creates a problem. Suppose we want to compare the profitability of a store that takes in $1,000,000 of revenue vs.&nbsp;$2,000,000. According to the way our calculations work now, both of these stores will have the same percentage of their revenue deducted as expenses. So if 95% of our revenue goes towards covering expenses for every value that falls within the window of $1,000,000 to $2,500,000, there is a perfect linear relationship between the revenue and the profit of the store; the $1,000,000 store collects $50,000 in profit while the $2,000,000 store collects $100,000. If we were to create a numeric regular sequence of revenue inputs from $1,000,000 to $2,500,000 and plot it against one of our measures of profit (before depreciation etc.), we would get:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../..\posts/Week_6/images/revenue_and_expense-02.png" class="img-fluid figure-img" width="597"></p>
+<figcaption class="figure-caption">Revenue vs.&nbsp;Expense</figcaption>
+</figure>
+</div>
+<p>This is a problem because the ultimate goal of our tool is to help potential grocery store owners decide which area could be more profitable for the store that they want to open than the next area. In other words, the model doesn’t afford any insight into the relative advantage of setting up a store in a given a area versus another, because any increased revenue from a chosen area is immediately offset by a corresponding increase in expenses that affects every store within a revenue range uniformly.</p>
+</section>
+<section id="a-potential-solution" class="level3">
+<h3 class="anchored" data-anchor-id="a-potential-solution">A Potential Solution</h3>
+<p>One way to ameliorate this problem is to simply give more control to the user of the application in choosing their own expense percentages. That way, the user can tinker with the tool in order to determine (in a broad way) how much resources they must have and how they must allocate those resources in order to be profitable in a certain location. We propose that this can be done through R Shiny. R Shiny allows for numeric inputs into functions by means of a user-controlled slider. Through this method, there is no need to discard the default percentages that we were previously working with; rather, instead of being hard-coded into the function, they can be placed as labels along the slider or set as default values that the user can adjust manually if they so choose.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../..\posts/Week_6/images/slider_input-01.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Slider input example (Shiny)</figcaption>
+</figure>
+</div>
+<p>This way, the user can know the industry averages for different variables while also comparing their own plans with those averages.</p>
+</section>
+<section id="the-rounding-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-rounding-problem">The Rounding Problem</h3>
+<p>Another issue I faced was one involving the rounding of percentages of my functions. I had rounded the original percentages up or down depending on whether they were considered a cost or an expense in the balance sheet, and this affected my output significantly when I went to compare my R output to the example provided by Duane (our client) in his excel sheet. Thankfully, when I reverted the percentages to their original state (4 decimal places), my outputs then matched the one’s displayed in the excel sheet. The big takeaway from this is that most of the time, the final output is what should be rounded in a calculation and not the intermediaries. I mistakenly thought that rounding the percentages used in the calculation in certain directions could provide a more “conservative” or “risky” weight to the final prediction. However, since we were dealing with small percentages of very large numbers, the degree of rounding that was there greatly impacted overall accuracy and rendered the predictions illogical. Thankfully, the functions work as they are supposed to now (even thought they may undergo a significant rewrite later).</p>
+</section>
+<section id="geocodingreverse-geocoding" class="level3">
+<h3 class="anchored" data-anchor-id="geocodingreverse-geocoding">Geocoding/Reverse Geocoding</h3>
+<p>Alongside working on the expenses functions, I also looked into the problem of obtaining the names of locations within the radius of a point for the purpose of obtaining relevant population information necessary for estimating market size. Two processes are important in helping to accomplish this task: <em>geocoding</em> and <em>reverse geocoding.</em> Geocoding simply means being able to take an address or name of a location and return a set of coordinates fo that location. Reverse geocoding is its opposite: it takes a set of coordinates as input an returns an address in response.</p>
+<p>One package that I found to be useful while working on this problem was <em>revgeo</em>. Revgeo is an R package for reverse geocoding that returns the city, state, country and zip code of a set of coordinates provided by the user.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>revgeo_address <span class="ot">&lt;-</span> <span class="cf">function</span>(longitude, latitude) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  API_KEY <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"GOOGLE_API_KEY"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  address <span class="ot">&lt;-</span> revgeo<span class="sc">::</span><span class="fu">revgeo</span>(<span class="at">longitude =</span> longitude, <span class="at">latitude =</span> latitude, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">provider =</span> <span class="st">'google'</span>, <span class="at">output =</span> <span class="st">"frame"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">API =</span> API_KEY)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  address</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>address <span class="ot">&lt;-</span> <span class="fu">revgeo_address</span>(<span class="sc">-</span><span class="dv">92</span>,<span class="dv">41</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>address</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  housenumber            street      city        county state   zip
+1         807 South 32nd Street Fairfield United States  Iowa 52556
+        country
+1 United States</code></pre>
+</div>
 </div>
 
 
+</section>
 </section>
 </section>
 
