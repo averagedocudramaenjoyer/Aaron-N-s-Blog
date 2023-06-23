@@ -47,7 +47,7 @@ Employee_Wages <- function(Total_Estimated_Revenue) {
 }
 ```
 
-The functions gives the user an error message if they enter a revenue amount under \$500,000 dollars due to there being no data at that range.
+The function gives the user an error message if they enter a revenue amount under \$500,000 dollars due to there being no data at that range.
 
 ### The Linearity Problem
 
@@ -95,3 +95,7 @@ address <- revgeo_address(-92,41)
 ```{r}
 address
 ```
+
+This package proved to be useful for making a basic function that gets the list of nearby counties within a radius of a set of coordinates. However, the biggest flaw is that the "county" column isn't accurate; it lists the name of the country instead. For our purposes, this was a significant roadblock, as having the county of a point makes retrieving data from TidyCensus a lot easier.
+
+More on the process of geocoding will be found below.
