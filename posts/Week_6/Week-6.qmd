@@ -98,7 +98,7 @@ address
 
 This package proved to be useful for making a basic function that gets the list of nearby counties within a radius of a set of coordinates. However, the biggest flaw is that the "county" column isn't accurate; it lists the name of the country instead. For our purposes, this was a significant roadblock, as having the county of a point makes retrieving data from TidyCensus a lot easier.
 
-More on the process of geocoding will be found below.
+One issue we've confronted with collecting data from geocoding is how to deal with coordinates near a state boundary. Because of the way that the TidyCensus library collects geography information, getting data for areas outside of state lines is not a straightforward process. Therefore, we have been brainstorming ways to get this interstate data without placing too high of a demand on memory and performance.
 
 ## Grocery Survey: First Impressions
 
@@ -119,3 +119,141 @@ There is much more potentially useful information, such as information about the
 ![Type of local foods purchased by region](/posts/Week_6/images/local_foods_bought.png){width="587"}
 
 Overall, this survey may help us provide useful information to the users of our tool and can help grant us perspective on how well the functionality of our tools maps onto the ground truth of what is really going on with rural grocery stores in Iowa. I found it to be a very interesting and useful resource.
+
+# Srika
+
+## Function Recreation
+
+We wanted to start with recreating the functions from Excel into an R package so that we could think about automation and edition later. I worked on the Market Revenue calculations sheet, which was highly dependent on the output from the Market Size Calculations Sheet. So initially, to visualize the flow, I created a flow chart using Miro to map how the functions are linked. I set some default percentages for the share by the primary, secondary, and rare shoppers to the total market revenue, which the user can alter if they want to.
+
+![](/posts/Week_6/images/miro.png){width="655"}
+
+## Difficulty in the process
+
+Figuring out the State index and percentage price increase values took a lot of my time after I created the functions. I shortlisted some of the resources that I found can be useful, like the CPI(Consumer Price Index), PPI(Producer Price Index), RPP(Rural Price Parities), and Cost of Living index. What made it more confusing for me was that some of these had values specifically for groceries other than the overall value. After discussing with Duane(our client) in our last meeting, I chose to use the Consumer Price index, which is the measure of the average change over time in the prices paid by urban consumers for a market basket of consumer goods and services, as the estimated price increase, and use Rural Price Parities, which measure the differences in price levels across states and metropolitan areas for a given year and are expressed as a percentage of the overall national price level, as the State Index.
+
+## Update and Maintenance
+
+I created the following table to Track the source and links about the variables used and how frequently it is required to be updated.
+
++------------------------------------------+-----------------------------------+-------------------------------+---------------------------------------------+----------------------------------------+
+| **Variable name**                        | **Frequency**                     | **Source**                    | **Link**                                    | **Notes**                              |
++------------------------------------------+-----------------------------------+-------------------------------+---------------------------------------------+----------------------------------------+
+| Total US Grocery Sales                   | Optional                          | IBIS                          |                                             | Default base year taken as 2022        |
++------------------------------------------+-----------------------------------+-------------------------------+---------------------------------------------+----------------------------------------+
+| Total US population                      | Optional                          | US Census Bureau              |                                             | Default base year taken as 2022        |
++------------------------------------------+-----------------------------------+-------------------------------+---------------------------------------------+----------------------------------------+
+| Estimated cumulative price increase(CPI) | yearly update/ Half yearly update | US Bureau of labor statistics | https://data.bls.gov/timeseries/CUUR0000SA0 | CPI in current year - CPI in base year |
+|                                          |                                   |                               |                                             |                                        |
+|                                          |                                   |                               |                                             | For now defaulting as 7 for 2023       |
++------------------------------------------+-----------------------------------+-------------------------------+---------------------------------------------+----------------------------------------+
+| State Index                              | yearly update                     | BEA                           | https://tinyurl.com/ycwpjzwz                |                                        |
++------------------------------------------+-----------------------------------+-------------------------------+---------------------------------------------+----------------------------------------+
+
+The consumer Price index is updated every month, but it is fine to take yearly once or twice because it does not change each month very much. And for the Rural Price parities, the latest data that we have is 2021 because it is economic census data and is not available for the recent 1 year.
+
+## Visualizations
+
+After finishing the recreation of the function in R, I started working on making some visualization to display in the dashboard of the tool. I used Plotly for making these visualizations because I think it is a simple way to make interactive plots in R. I was working with the Sales Genie Data sets about the grocery stores and dollar stores in Iowa. I also looked at the Google API data set for the dollar store data in Iowa and Illinois.
+
+**Sales Genie Data Set Vs Google API data set**
+
+Most of the visualizations that I created were using the sales Genie Data Sets. Although one problem that I noticed was that it could possibly be missing some stores. I noticed this when I was trying to plot the number of stores in each Dollar Store chain using both the Google API data set and the Sales Genie Data set.
+
+![](/posts/Week_6/images/dollarstoremailingcity.png){width="618"}
+
+The above plot shows the number of cities in Iowa with more than 1 dollar store plotted using the Sales Genie Data Set. We notice that Ames is not there, although there are 2 dollar stores in Ames.
+
+When I saw the Google API data set to check this, it was also incorrect, saying there are 4 dollar stores in Ames. When I looked at the data table, I found that it had a store which was near Ames, which had the mailing city as Ames. I have more difficulty with the Google data set is that it is not cleaned it has some dollar generals as DG market and differentiated based on name than on chain like shown in the below plot:
+
+![](/posts/Week_6/images/dollarstoregoogle.png){width="661"}
+
+The following plots show the distribution of stores in cities of Iowa with more than one chain grocery store and non-chain grocery store, respectively. I am currently working on improving this plot by trying to make a single plot that contains the distribution of the stores color-coded by the type so that we can see if there are any trends that we can observe about the presence of one type of store affecting the other(like if dollar stores affect the non-chain grocery stores).
+
+![](/posts/Week_6/images/chaingrocerylocation.png){width="541"}
+
+![](/posts/Week_6/images/nonchaingrocerylocation.png){width="554"}
+
+From all these plots, one common thing that we can observe is that irrespective of the type, there are usually more stores in big cities than in small cities, as we would expect.
+
+**Sales Volume Distribution**
+
+```{r, eval=FALSE}
+library(ggplot2)
+sales_chain_grocery <- ggplot(data = chain_grocery_store_data, aes(x = Location_Sales_Volume_Range, fill = Company_Name)) +
+            geom_bar(position = "stack")+
+  ggtitle("Location Sales Volume distribution for Chain Grocery Stores") +
+  xlab("Sales Volume Range") + ylab("Number of Stores")+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+ggplotly(sales_chain_grocery)
+```
+
+![](/posts/Week_6/images/sales_volume_for_chain_grocery.png){width="675"}
+
+The above plot shows the distribution of the number of stores by Sales volumes for the major chain grocery stores in Iowa. I must do data cleaning and arrange the x-axis titles in ascending order to make them more interpretable.
+
+![](/posts/Week_6/images/sales_volume_for_non_chain_grocery.png){width="643"}
+
+The plot shows the location sales volume for the non-chain grocery stores. We can see that many of the non-chain grocery stores have a 1-2.5 Million sales volume.
+
+## Working on
+
+Matching the city names in the Sales Genie Data Set to their counties so that we can make a plot classifying the stores based on their location classified by the RUCC(Rural-Urban Continuum Codes) code.
+
+# Alex
+
+# Converting Excel
+
+We converted the Excel functions to R. I handled converting the determining market size calculations, which figures out how many people would shop at the store.
+
+# Google Maps API
+
+We used the Google Maps API to find the nearest grocery stores. An API is a tool developers provide for other developers that allow them to incorporate their work into other works. The API gives us the latitude and longitude of the other stores, which we can use to find the distance between the stores. We can also use these coordinates to generate polygons.
+
+# Market Size
+
+## Quarter Circle
+
+The quarter circle was the original design in the excel spreadsheet. Quarter circles are very simple to implement, and work by finding the radius to the nearest store and turning it into a quarter circle that we are using as the region of our market share. The disadvantage of doing it this way is that it is a massive over estimate because it doesn't factor the other store's "sphere of influence" into account. These are essentially a rudimentary version of a Voronoi polygon.
+
+![](/posts/Week_6/images/IMG_5336.png){width="736"}
+
+## Voronoi
+
+Voronoi polygons are a way of breaking up a plane into sections defined by which node of a graph they are closest to. This shows a model where people will go to the closest grocery store purely based on their location. This doesn't take into account anything about the store, and only cares about the location. The pro's of this are that in rural settings, people are most likely going to go to the nearest store. The cons of this are that it ignores factors such as offerings, pricing, and the fact that people tend to go towards more densely populated areas to shop.
+
+## ![](/posts/Week_6/images/440px-Voronoi_growth_euclidean.gif)
+
+> Voronoi Polygon demonstration from Wikipedia
+>
+> ![](/posts/Week_6/images/unnamed-chunk-2-1.png){width="633"}
+
+> Voronoi diagram of grocery stores in Iowa
+
+## Reilley's Law
+
+Reilly's law of retail gravitation is the idea that people are drawn to shop in areas with denser populations. The formula for Reilly's law is a ratio of distance between cities and the difference in the populations between the two. This is a good model because it takes into account the shopping habits of consumers. The downsides of this model are that it has a lot of limitations, such as the cities having to have relatively similar populations, and it gives an overestimate because it assumes everyone shops locally.
+
+![](/posts/Week_6/images/reillys-01.jpg)
+
+# Voronoi vs Reilly's Law
+
+Voronoi and Reilly's law can tell us similar, but different things. Voronoi shows the geographic regions where our proposed store would be the closest. Reilly's law would show the regions around our store that people would be willing to travel in order to shop at the store.
+
+# Census
+
+We are able to use census information to get data at various different resolutions, such as state, county, tract, and place. Using this we can generate maps and map regions to do different types of analysis. One example is knowing how many people live in a region between two grocery stores.
+
+# Automation
+
+## County
+
+We have census data for the populations of counties, which we can retrieve using TidyCensus. TidyCensus is a package for R which allows developers to easily get Census data.
+
+## Towns
+
+Using the script Jay made, we can find the populations of all the towns in a given geometry. Jay's script uses a package called Tigris, which allows us to see demographic data within a geographic boundary. Jay's script has functions that allow you to give a latitude, longitude, and state, and it will return the city name. You can also give it a county and have it return all the towns in that county.
+
+## Rural
+
+We are in the process of automating the rural population. We can calculate this by adding up the populations of all the towns in the county and subtracting that from the total number of people in the county.
