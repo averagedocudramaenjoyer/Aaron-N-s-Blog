@@ -5,7 +5,7 @@ date: "2023-06-22"
 categories: "Week Six"
 ---
 
-![Lunchtime at Grundy Center](/posts/Week_6/images/lunchtime.jpg){width="545"}
+![Lunchtime at Grundy Center.](/posts/Week_6/images/lunchtime.jpg){width="545"}
 
 # WINVEST
 
