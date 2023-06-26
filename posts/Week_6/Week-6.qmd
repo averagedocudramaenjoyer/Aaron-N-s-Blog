@@ -7,23 +7,39 @@ categories: "Week Six"
 
 ![Lunchtime at Grundy Center](/posts/Week_6/images/lunchtime.jpg){width="545"}
 
-# Overview
+# WINVEST
 
-The primary focus for this week was understanding how all of the work that we did for our particular sections of the project will fit together into a seamless whole. In order to do that, we have been learning more about each other's work done toward the beginning of the program and thinking about ways to connect them in the context of the final application.
-
-We also spent the first part of the week collecting data for the WINVEST project. On Monday we visited Grundy Center and New Hampton, while on Tuesday we visited Independence, all of which were northeast of Ames. We spent time walking through residential areas taking pictures of houses and filling out forms to be compiled into a dataset that will be analyzed later for the purpose of determing which of the areas will qualify for a grant from the state. We saw many interesting sites and learned a lot of doing field work for data science.
+We also spent the first part of the week collecting data for the WINVEST project. On Monday we visited Grundy Center and New Hampton, while on Tuesday we visited Independence, all of which were northeast of Ames. We spent time walking through residential areas taking pictures of houses and filling out forms to be compiled into a dataset that will be analyzed later for the purpose of determining which of the areas will qualify for a grant from the state. We saw many interesting sites and learned a lot of doing field work for data science.
 
 ![A house that would be marked as "good".](/posts/Week_6/images/housegood.png){width="505"}
 
 ![A house that would be marked as being in "poor" condition.](/posts/Week_6/images/housepoor.png){width="508"}
 
-# Current Project Objectives
+# Overview
 
-One important feature of the project is how we measure market size. This involves getting an estimate of the population around a user-defined point in the application. We have been working on the shape and orientation of this area, as well as how to load only the data that we need in response to user-input. Our estimated customer base in our project is influenced by multiple factors, including the presence of dollar stores, other grocery stores, whether the population is urban or rural and other things. This data ultimately factors into our calculation for estimated revenue of the proposed store, which factors into the calculation of profitability. As we get closer and closer to our deadline, we are thinking more and more about our final tool and what will and will not make it into the final draft. We are hopeful that we will be able to balance user-friendliness with depth to make a tool that's easy to use and valuable for our users.
+The primary focus for this week was understanding how all of the work that we did for our particular sections of the project will fit together into a seamless whole. In order to do that, we have been learning more about each other's work done toward the beginning of the program and thinking about ways to connect them in the context of the final application.
 
-## Aaron
+## Grocery Survey: First Impressions
 
-### The Percentage Question
+We have also been looking over the results of a survey conducted by Iowa State Extension and Outreach (sponsored by AgMRC) that asked owners and senior managers of independently-owned rural grocery stores throughout Iowa a series of questions about their store's performance, selection and design, as well as the top challenges they face in keeping their store profitable. The survey divided Iowa into 3 regions and examined the survey results accordingly:
+
+![Three regions analyzed by the survey.](/posts/Week_6/images/iowa_regions.png){alt="Three regions analyzed by the survey." width="626"}
+
+One issue with the survey was the low response rate: only 95 out of 671 independent grocers responded (14.2%). However, the findings might still be useful to look at for our purposes.
+
+Here are some charts I found interesting:
+
+![Top challenges faced by small grocers in Iowa](/posts/Week_6/images/challenges.png){alt="Top challenges faced by small grocers in Iowa" width="628"}
+
+![Difficulties in purchasing and selling local products](/posts/Week_6/images/selling_local.png){alt="Difficulties in purchasing and selling local products" width="641"}
+
+There is much more potentially useful information, such as information about the most frequently found unique assets of stores and the specific types of local products most frequently bought according to region, shown here:
+
+![Type of local foods purchased by region](/posts/Week_6/images/local_foods_bought.png){alt="Type of local foods purchased by region" width="587"}
+
+Overall, this survey may help us provide useful information to the users of our tool and can help grant us perspective on how well the functionality of our tools maps onto the ground truth of what is really going on with rural grocery stores in Iowa. I found it to be a very interesting and useful resource.
+
+### Bizminer Percentages
 
 One important concern for the expenses component of the project is the question of modularity, or the freedom given to the user to affect the calculations performed in the server. The functions used in this project to calculate expenses for potential grocery stores do so by providing different percentages of revenue spent on expenses based off of how high the total estimated revenue input is at the beginning. The original excel sheet establishes 5 distinct ranges that each have different percentages of the revenue across the different line items of the sheet.
 
@@ -49,7 +65,7 @@ Employee_Wages <- function(Total_Estimated_Revenue) {
 
 The function gives the user an error message if they enter a revenue amount under \$500,000 dollars due to there being no data at that range.
 
-### The Linearity Problem
+### The Linearity Finding
 
 Many of the functions derived from the excel sheet "Estimating Expenses" have been written to take the total estimated revenue as an input and return the dollar amount of a certain cost in accordance to the average percentage of revenue spent on that cost for stores of a similar size. For example, a store that takes in \$1,000,000 and a store that takes in \$2,000,000 share common percentages for costs such as employee wages and officer compensation. This broad assignment of one percentage based on a large revenue window also applies to the function for calculating gross margin, or the amount of funds left over after accounting for the cost of goods for the store.
 
@@ -71,7 +87,9 @@ This way, the user can know the industry averages for different variables while 
 
 Another issue I faced was one involving the rounding of percentages of my functions. I had rounded the original percentages up or down depending on whether they were considered a cost or an expense in the balance sheet, and this affected my output significantly when I went to compare my R output to the example provided by Duane (our client) in his excel sheet. Thankfully, when I reverted the percentages to their original state (4 decimal places), my outputs then matched the one's displayed in the excel sheet. The big takeaway from this is that most of the time, the final output is what should be rounded in a calculation and not the intermediaries. I mistakenly thought that rounding the percentages used in the calculation in certain directions could provide a more "conservative" or "risky" weight to the final prediction. However, since we were dealing with small percentages of very large numbers, the degree of rounding that was there greatly impacted overall accuracy and rendered the predictions illogical. Thankfully, the functions work as they are supposed to now (even thought they may undergo a significant rewrite later).
 
-### Geocoding/Reverse Geocoding
+# Automating Location Data
+
+## Geocoding/Reverse Geocoding
 
 Alongside working on the expenses functions, I also looked into the problem of obtaining the names of locations within the radius of a point for the purpose of obtaining relevant population information necessary for estimating market size. Two processes are important in helping to accomplish this task: *geocoding* and *reverse geocoding.* Geocoding simply means being able to take an address or name of a location and return a set of coordinates fo that location. Reverse geocoding is its opposite: it takes a set of coordinates as input an returns an address in response.
 
@@ -100,29 +118,51 @@ This package proved to be useful for making a basic function that gets the list 
 
 One issue we've confronted with collecting data from geocoding is how to deal with coordinates near a state boundary. Because of the way that the TidyCensus library collects geography information, getting data for areas outside of state lines is not a straightforward process. Therefore, we have been brainstorming ways to get this interstate data without placing too high of a demand on memory and performance.
 
-## Grocery Survey: First Impressions
+## Google Maps API
 
-We have also been looking over the results of a survey conducted by Iowa State Extension and Outreach (sponsored by AgMRC) that asked owners and senior managers of independently-owned rural grocery stores throughout Iowa a series of questions about their store's performance, selection and design, as well as the top challenges they face in keeping their store profitable. The survey divided Iowa into 3 regions and examined the survey results accordingly:
+We used the Google Maps API to find the nearest grocery stores. An API is a tool developers provide for other developers that allows them to incorporate their work into other works. The API gives us the latitude and longitude of the other stores, which we can use to find the distance between the stores. We can also use these coordinates to generate polygons.
 
-![Three regions analyzed by the survey.](/posts/Week_6/images/iowa_regions.png){width="626"}
+## 
 
-One issue with the survey was the low response rate: only 95 out of 671 independent grocers responded (14.2%). However, the findings might still be useful to look at for our purposes.
+## Quarter Circle
 
-Here are some charts I found interesting:
+The quarter circle was the original design in the excel spreadsheet. Quarter circles are very simple to implement, and work by finding the radius to the nearest store and turning it into a quarter circle that we are using as the region of our market share. The disadvantage of doing it this way is that it is a massive over estimate because it doesn't factor the other store's "sphere of influence" into account. These are essentially a rudimentary version of a Voronoi polygon.
 
-![Top challenges faced by small grocers in Iowa](/posts/Week_6/images/challenges.png){width="628"}
+![](/posts/Week_6/images/IMG_5336.png){width="736"}
 
-![Difficulties in purchasing and selling local products](/posts/Week_6/images/selling_local.png){width="641"}
+## Automating Population Data
 
-There is much more potentially useful information, such as information about the most frequently found unique assets of stores and the specific types of local products most frequently bought according to region, shown here:
+We are able to use census information to get data at various different resolutions, such as state, county, tract, and place. Using this we can generate maps and map regions to do different types of analysis. One example is knowing how many people live in a region between two grocery stores.
 
-![Type of local foods purchased by region](/posts/Week_6/images/local_foods_bought.png){width="587"}
+-   County: We have census data for the populations of counties, which we can retrieve using TidyCensus. TidyCensus is a package for R which allows developers to easily get Census data.
 
-Overall, this survey may help us provide useful information to the users of our tool and can help grant us perspective on how well the functionality of our tools maps onto the ground truth of what is really going on with rural grocery stores in Iowa. I found it to be a very interesting and useful resource.
+-   Town: Using the script Jay made, we can find the populations of all the towns in a given geometry. Jay's script uses a package called Tigris, which allows us to see demographic data within a geographic boundary. Jay's script has functions that allow you to give a latitude, longitude, and state, and it will return the city name. You can also give it a county and have it return all the towns in that county.
 
-# Srika
+-   Rural: We are in the process of automating the rural population. We can calculate this by adding up the populations of all the towns in the county and subtracting that from the total number of people in the county.
 
-## Function Recreation
+## Voronoi
+
+Voronoi polygons are a way of breaking up a plane into sections defined by which node of a graph they are closest to. This shows a model where people will go to the closest grocery store purely based on their location. This doesn't take into account anything about the store, and only cares about the location. The pro's of this are that in rural settings, people are most likely going to go to the nearest store. The cons of this are that it ignores factors such as offerings, pricing, and the fact that people tend to go towards more densely populated areas to shop.
+
+![](/posts/Week_6/images/440px-Voronoi_growth_euclidean.gif)
+
+Voronoi Polygon demonstration from Wikipedia
+
+![](/posts/Week_6/images/unnamed-chunk-2-1.png){width="633"}
+
+Voronoi diagram of grocery stores in Iowa
+
+## Reilly's Law
+
+Reilly's law of retail gravitation is the idea that people are drawn to shop in areas with denser populations. The formula for Reilly's law is a ratio of distance between cities and the difference in the populations between the two. This is a good model because it takes into account the shopping habits of consumers. The downsides of this model are that it has a lot of limitations, such as the cities having to have relatively similar populations, and it gives an overestimate because it assumes everyone shops locally.
+
+![](/posts/Week_6/images/reillys-01.jpg)
+
+## Voronoi vs Reilly's Law
+
+Voronoi and Reilly's law can tell us similar, but different things. Voronoi shows the geographic regions where our proposed store would be the closest. Reilly's law would show the regions around our store that people would be willing to travel in order to shop at the store.
+
+# Estimated Revenue Functions
 
 We wanted to start with recreating the functions from Excel into an R package so that we could think about automation and edition later. I worked on the Market Revenue calculations sheet, which was highly dependent on the output from the Market Size Calculations Sheet. So initially, to visualize the flow, I created a flow chart using Miro to map how the functions are linked. I set some default percentages for the share by the primary, secondary, and rare shoppers to the total market revenue, which the user can alter if they want to.
 
@@ -147,18 +187,18 @@ I created the following table to Track the source and links about the variables 
 |                                          |                                   |                               |                                             |                                        |
 |                                          |                                   |                               |                                             | For now defaulting as 7 for 2023       |
 +------------------------------------------+-----------------------------------+-------------------------------+---------------------------------------------+----------------------------------------+
-| State Index                              | yearly update                     | BEA                           | https://tinyurl.com/ycwpjzwz                |                                        |
+| State Index                              | yearly update                     | BEA                           | https://tinyurl.com/ycwpjzwz                | Depends on state                       |
 +------------------------------------------+-----------------------------------+-------------------------------+---------------------------------------------+----------------------------------------+
 
 The consumer Price index is updated every month, but it is fine to take yearly once or twice because it does not change each month very much. And for the Rural Price parities, the latest data that we have is 2021 because it is economic census data and is not available for the recent 1 year.
 
-## Visualizations
+# Comparing Data Sources
 
-After finishing the recreation of the function in R, I started working on making some visualization to display in the dashboard of the tool. I used Plotly for making these visualizations because I think it is a simple way to make interactive plots in R. I was working with the Sales Genie Data sets about the grocery stores and dollar stores in Iowa. I also looked at the Google API data set for the dollar store data in Iowa and Illinois.
+After finishing the recreation of the function in R, I started working on making some visualization to display in the dashboard of the tool. I used Plotly to make the visualizations. Plotly offers versatile licensing options, including an open-source version (GPLv3) and a commercial edition. It excels in creating interactive visualizations and enables collaboration, making it a flexible and powerful choice for data visualization needs.
 
-**Sales Genie Data Set Vs Google API data set**
+## **Sales Genie Data Set Vs Google API data set**
 
-Most of the visualizations that I created were using the sales Genie Data Sets. Although one problem that I noticed was that it could possibly be missing some stores. I noticed this when I was trying to plot the number of stores in each Dollar Store chain using both the Google API data set and the Sales Genie Data set.
+I was working with the Sales Genie Data sets about the grocery stores and dollar stores in Iowa. I also looked at the Google API data set for the dollar store data in Iowa and Illinos. Most of the visualizations that I created were using the sales Genie Data Sets. Although one problem that I noticed was that it could possibly be missing some stores. I noticed this when I was trying to plot the number of stores in each Dollar Store chain using both the Google API data set and the Sales Genie Data set.
 
 ![](/posts/Week_6/images/dollarstoremailingcity.png){width="618"}
 
@@ -176,14 +216,17 @@ The following plots show the distribution of stores in cities of Iowa with more 
 
 From all these plots, one common thing that we can observe is that irrespective of the type, there are usually more stores in big cities than in small cities, as we would expect.
 
-**Sales Volume Distribution**
+### **Sales Volume Distribution**
 
 ```{r, eval=FALSE}
 library(ggplot2)
-sales_chain_grocery <- ggplot(data = chain_grocery_store_data, aes(x = Location_Sales_Volume_Range, fill = Company_Name)) +
-            geom_bar(position = "stack")+
+sales_chain_grocery <- ggplot(data = chain_grocery_store_data,
+                              aes(x = Location_Sales_Volume_Range,
+                                  fill = Company_Name)) +
+            geom_bar(position = "stack") +
   ggtitle("Location Sales Volume distribution for Chain Grocery Stores") +
-  xlab("Sales Volume Range") + ylab("Number of Stores")+
+  xlab("Sales Volume Range") + 
+  ylab("Number of Stores") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ggplotly(sales_chain_grocery)
 ```
@@ -196,64 +239,30 @@ The above plot shows the distribution of the number of stores by Sales volumes f
 
 The plot shows the location sales volume for the non-chain grocery stores. We can see that many of the non-chain grocery stores have a 1-2.5 Million sales volume.
 
-## Working on
+## RUCC
 
-Matching the city names in the Sales Genie Data Set to their counties so that we can make a plot classifying the stores based on their location classified by the RUCC(Rural-Urban Continuum Codes) code.
+The 2013 Rural-Urban Continuum Codes form a classification scheme that distinguishes metropolitan counties by the population size of their metro area and non metropolitan counties by the degree of urbanization and adjacency to a metro area.
 
-# Alex
+Each county in the U.S. is assigned one of the nine codes listed below. Codes 4-9 are typically considered to be rural.
 
-# Converting Excel
+-   RUCC 1: Counties in metro areas of 1 million population or more
 
-We converted the Excel functions to R. I handled converting the determining market size calculations, which figures out how many people would shop at the store.
+-   RUCC 2: Counties in metro areas of 250,000 to 1 million population
 
-# Google Maps API
+-   RUCC 3: Counties in metro areas of fewer than 250,000 population
 
-We used the Google Maps API to find the nearest grocery stores. An API is a tool developers provide for other developers that allow them to incorporate their work into other works. The API gives us the latitude and longitude of the other stores, which we can use to find the distance between the stores. We can also use these coordinates to generate polygons.
+-   RUCC 4: Population of 20,000 or more, adjacent to a metro area
 
-# Market Size
+-   RUCC 5: Population of 20,000 or more, not adjacent to a metro area
 
-## Quarter Circle
+-   RUCC 6: Population of 2,500 to 19,999, adjacent to a metro area
 
-The quarter circle was the original design in the excel spreadsheet. Quarter circles are very simple to implement, and work by finding the radius to the nearest store and turning it into a quarter circle that we are using as the region of our market share. The disadvantage of doing it this way is that it is a massive over estimate because it doesn't factor the other store's "sphere of influence" into account. These are essentially a rudimentary version of a Voronoi polygon.
+-   RUCC 7: Population of 2,500 to 19,999, not adjacent to a metro area
 
-![](/posts/Week_6/images/IMG_5336.png){width="736"}
+-   RUCC 8: Less than 2,500 population, adjacent to a metro area
 
-## Voronoi
+-   RUCC 9: Less than 2,500 urban population, not adjacent to a metro area
 
-Voronoi polygons are a way of breaking up a plane into sections defined by which node of a graph they are closest to. This shows a model where people will go to the closest grocery store purely based on their location. This doesn't take into account anything about the store, and only cares about the location. The pro's of this are that in rural settings, people are most likely going to go to the nearest store. The cons of this are that it ignores factors such as offerings, pricing, and the fact that people tend to go towards more densely populated areas to shop.
+Matching the city names in the Sales Genie Data Set to their counties will help us make a plot classifying the stores based on their location according to the RUCC (Rural-Urban Continuum Codes). This could help us visualize if there is any correlation between the number of a particular type of store and urban or rural counties
 
-## ![](/posts/Week_6/images/440px-Voronoi_growth_euclidean.gif)
-
-> Voronoi Polygon demonstration from Wikipedia
->
-> ![](/posts/Week_6/images/unnamed-chunk-2-1.png){width="633"}
-
-> Voronoi diagram of grocery stores in Iowa
-
-## Reilley's Law
-
-Reilly's law of retail gravitation is the idea that people are drawn to shop in areas with denser populations. The formula for Reilly's law is a ratio of distance between cities and the difference in the populations between the two. This is a good model because it takes into account the shopping habits of consumers. The downsides of this model are that it has a lot of limitations, such as the cities having to have relatively similar populations, and it gives an overestimate because it assumes everyone shops locally.
-
-![](/posts/Week_6/images/reillys-01.jpg)
-
-# Voronoi vs Reilly's Law
-
-Voronoi and Reilly's law can tell us similar, but different things. Voronoi shows the geographic regions where our proposed store would be the closest. Reilly's law would show the regions around our store that people would be willing to travel in order to shop at the store.
-
-# Census
-
-We are able to use census information to get data at various different resolutions, such as state, county, tract, and place. Using this we can generate maps and map regions to do different types of analysis. One example is knowing how many people live in a region between two grocery stores.
-
-# Automation
-
-## County
-
-We have census data for the populations of counties, which we can retrieve using TidyCensus. TidyCensus is a package for R which allows developers to easily get Census data.
-
-## Towns
-
-Using the script Jay made, we can find the populations of all the towns in a given geometry. Jay's script uses a package called Tigris, which allows us to see demographic data within a geographic boundary. Jay's script has functions that allow you to give a latitude, longitude, and state, and it will return the city name. You can also give it a county and have it return all the towns in that county.
-
-## Rural
-
-We are in the process of automating the rural population. We can calculate this by adding up the populations of all the towns in the county and subtracting that from the total number of people in the county.
+# 
