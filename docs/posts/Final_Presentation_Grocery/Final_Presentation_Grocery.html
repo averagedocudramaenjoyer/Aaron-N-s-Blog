@@ -199,6 +199,10 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="tigris">Tigris</h3>
 <p>Tigris is a package designed to help developers use Census Bureau TIGER/Line files. This is being used to find county and place info, and is being used to determine which cities are in the market area.</p>
 </section>
+<section id="google-geocoding-api" class="level3">
+<h3 class="anchored" data-anchor-id="google-geocoding-api">Google Geocoding API</h3>
+<p>The Google Geocoding API is used to take an address and find the corresponding latitude and longitude for that address. This is used to help gather information about the communities around a given point on the map.</p>
+</section>
 <section id="google-places-api" class="level3">
 <h3 class="anchored" data-anchor-id="google-places-api">Google Places API</h3>
 <p>The Google Places API is being used to find nearby stores, and to convert addresses to GPS coordinates. These stores help to determine our market size (“buffer zone”) and factor in the effect on competition on store profitability.</p>
@@ -253,18 +257,18 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="revenue-estimation" class="level1">
 <h1><strong>Revenue Estimation</strong></h1>
-<p>Estimating the revenue is important for calculating the overall profit of a step. Once we determined our market size, we need the exact number of shoppers and the average spending by each to get the revenue estimate</p>
+<p>Estimating the revenue is important for calculating the overall profit of a step. The functions in this section of the package estimate the total revenue of a store using the estimated market size, three different shopper type categories, and the average per capita spending on groceries.</p>
 <section id="average-grocery-spend" class="level2">
 <h2 class="anchored" data-anchor-id="average-grocery-spend">Average Grocery Spend</h2>
 <p>The average per capita grocery spend is the average money each person in the US spends on groceries per year. This value acts as a baseline for how much we can expect each shopper to spend in a store. We created three functions that calculate this value and adjust for inflation.</p>
 <p>First, we calculate the average per capita grocery spending for 2022 by dividing the total grocery sales from IBIS by the total US population as of 1/1/2023. This is done by the function <code>Avg_Capita_Grocery_Spend()</code> . Since it is calculated for 2022, it should be adjusted for inflation from the base year(2022). CPI and RPP does this adjustment to the value in the functions <code>Adj_Capita_Grocery_Spend()</code> and <code>State_Adj_Capita_Grocery_Spend()</code>, respectively.</p>
 <ul>
-<li><p><strong>Consumer Price Index(CPI):</strong> Measure of the average change over time in the prices paid by urban consumers for a market basket of consumer goods and services. So, adjusting according to the CPI accounts for the overall inflation in the US.</p></li>
-<li><p><strong>Regional Price Parities(RPP):</strong> Measure the differences in price levels across states and metropolitan areas for a given year and are expressed as a percentage of the overall national price level. This value is 100 for the overall US, and it is lesser or higher than 100 depending on if the state’s price levels are lower or higher than the national average. Adjusting according to this measure gives that state’s average per capita spending on groceries for that year.</p></li>
-<li><p>Update and&nbsp;Maintenance</p></li>
+<li><p><strong>Consumer Price Index (CPI):</strong> Measure of the average change over time in the prices paid by urban consumers for a market basket of consumer goods and services. So, adjusting according to the CPI accounts for the overall inflation in the US.</p></li>
+<li><p><strong>Regional Price Parities (RPP):</strong> Measure the differences in price levels across states and metropolitan areas for a given year and are expressed as a percentage of the overall national price level. This value is 100 for the overall US, and it is lesser or higher than 100 depending on if the state’s price levels are lower or higher than the national average. Adjusting according to this measure gives that state’s average per capita spending on groceries for that year.</p></li>
 </ul>
+<section id="update-and-maintenance" class="level3">
+<h3 class="anchored" data-anchor-id="update-and-maintenance">Update and Maintenance</h3>
 <table class="table">
-<caption>Money spent by different categories of shoppers:</caption>
 <tbody>
 <tr class="odd">
 <td><strong>Variable name</strong></td>
@@ -304,17 +308,16 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+</section>
+<section id="money-spent-by-different-categories-of-shoppers" class="level3">
+<h3 class="anchored" data-anchor-id="money-spent-by-different-categories-of-shoppers">Money spent by different categories of shoppers</h3>
 <p>Since not all shoppers will have the same level of preference for all stores, it is important to consider and add weight to the proportion of money spent. To do this, the shoppers are classified into:</p>
 <ul>
 <li><p><strong><em>Primary Shoppers:</em></strong> The people doing most of the household grocery shopping in that store.</p></li>
 <li><p><strong><em>Secondary Shoppers:</em></strong> Regular visitors for smaller purchases but will often do their weekly shopping elsewhere.</p></li>
-<li><p><strong><em>Rare Shoppers:</em></strong> People who are very occasional shoppers(only when necessary).</p>
-<p>Shopper choosing a store as a primary store or not depends on many factors, one of the main ones being distance and accessibility. So we classify the markets based on distance or location into:</p></li>
-<li><p><strong><em>Metro</em>:</strong> The population of the city in which the store is planned to open</p></li>
-<li><p><strong><em>Town:</em></strong> Population of all the cities in the market</p></li>
-<li><p><strong><em>Rural:</em></strong> Total rural population of the market</p></li>
+<li><p><strong><em>Rare Shoppers:</em></strong> People who are very occasional shoppers(only when necessary).</p></li>
 </ul>
-<p>From the above classifications, it would be reasonable to expect more primary customers from metro markets than from elsewhere because of the proximity. So the weight is added using the default percentages of primary, secondary, and rare shoppers from the different markets.</p>
+<p>Shoppers choosing a store as a primary store or not depends on many factors, one of the main ones being distance and accessibility. It would be reasonable to expect more primary customers from metro markets than from elsewhere because of their increased proximity to the address of the store. So the weight is added using the default percentages of primary, secondary, and rare shoppers from the different markets.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -346,7 +349,8 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <p>The total number of primary, secondary, and rare shoppers is calculated by multiplying the corresponding percentage with our market’s metro, town, and rural population calculated in the previous section. This calculation is done in the functions <code>Primary_Shoppers_Count()</code> , <code>Secondary_Shoppers_Count()</code> , and <code>Rare_Shoppers_Count()</code> .</p>
-<p>As Primary shoppers do most of their shopping in that grocery store, the percentage of the average they spend(60%) is much more than that spent by the secondary shoppers(25%) or rare shoppers(5%). The total spend for each category of shoppers is calculated individually by the functions <code>Total_Spend_Primary_Shoppers()</code> , <code>Total_Spend_Secondary_Shoppers()</code> , and <code>Total_Spend_Rare_Shoppers()</code> by multiplying the percentage, number of shoppers, and average grocery spend.</p>
+<p>As primary shoppers do most of their shopping in that grocery store, the percentage of the average they spend(60%) is much more than that spent by the secondary shoppers(25%) or rare shoppers(5%). The total spend for each category of shoppers is calculated individually by the functions <code>Total_Spend_Primary_Shoppers()</code> , <code>Total_Spend_Secondary_Shoppers()</code> , and <code>Total_Spend_Rare_Shoppers()</code> by multiplying the percentage, number of shoppers, and average grocery spend.</p>
+</section>
 </section>
 <section id="total-revenue" class="level2">
 <h2 class="anchored" data-anchor-id="total-revenue">Total Revenue</h2>
@@ -367,8 +371,8 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Rest of State: 249 or fewer Any county </p></li>
 </ul>
 <p>Of these, we specifically focused on the cities with a population of less than 2500 and created a plot that shows the number of the different types of stores in each city group classification.</p>
-<p><img src="images/srika_plotly_final.png" class="img-fluid"></p>
-<p>We see that there are very less chain grocery stores in call these cities with a population of less than 2500. As we go more and more rural, the only competition in the city is from the other non-chain grocery stores in that area. The distribution of the sales volume for various non-chain grocery stores is also shown in the dashboard. These visualizations will help small rural grocery business owners to design their stores depending on the preexisting competition.</p>
+<p><img src="images/srika_plotly_2.png" class="img-fluid"></p>
+<p>We see that there are significantly less chain grocery stores in all of these cities with a population of less than 2,500. As we go more and more rural, the only competition in the city is from the other non-chain grocery stores in that area. The distribution of the sales volume for various non-chain grocery stores is also shown in the dashboard. These visualizations will help small rural grocery business owners to design their stores depending on the preexisting competition.</p>
 </section>
 </section>
 <section id="expense-estimation" class="level1">
@@ -392,7 +396,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="operating-expenses" class="level3">
 <h3 class="anchored" data-anchor-id="operating-expenses"><strong>Operating Expenses</strong></h3>
-<p>Comprises expenses such as compensation for company officers, employee wages and other common operating expenses of grocery stores. Users can select percentages for each of these expenses or they can rely on the default value provided by Bizminer.</p>
+<p>Comprises expenses such as compensation for company officers, employee wages and other common operating expenses of grocery stores. Users can select percentages for each of these expenses or they can rely on the default value provided by Bizminer/Vertical IQ.</p>
 <p>Associated Functions:</p>
 <ul>
 <li><p><code>Employee_Wages()</code></p></li>
@@ -475,18 +479,21 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>Since the data taken from the American Community Survey is based off of representative sampling, each of the bar plots display corresponding margin of error bars for each county’s estimate. The estimate and the margin of error can also be found by hovering the cursor over each bar. The Race/Hispanic Origin Table, on the other hand, is taken from the Decennial Census and contains counts of the total population, thus lacking these error bars.</p>
 </section>
-<section id="design-decisions" class="level1">
-<h1>Design Decisions</h1>
-<p>When designing our product, we created a strengths, weaknesses, opportunities, and threats matrix to decide what software we should use. For the back-end code we decided to go with R as it is the industry standard for data science, and it is easy to integrate with our front-end. For the front end we went with R Shiny. We went with Shiny because of the clean, easy to set up webpages with intuitive user interfaces. It allowed us to make sliders to let users manually change variables to better fit their circumstances. Another feature of Shiny is its ability to incorporate maps, which we are using in our product to display the market area.</p>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results"><strong>Results</strong></h2>
+<section id="results" class="level1">
+<h1><strong>Results</strong></h1>
+<p>This DSPG project produced the following as deliverables:</p>
+<ul>
+<li><p>Rural grocery stores profitability dashboard</p></li>
+<li><p>The DSPG Grocery (DSPGrocery) R package containing the relevant functions for the tool</p></li>
+<li><p>Salesgenie Tableau Dashboard</p></li>
+<li><p>Blogs that chronicle the team’s progress</p></li>
+</ul>
 </section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion"><strong>Conclusion</strong></h2>
-<p>Through continuous improvement, our tool presents a significant opportunity to combat food deserts, giving small rural business owners the means to create sustainable grocery stores and uplift their communities. We can implement better ways to calculate the market size (like Voronoi and Reillys), include start-up costs while estimating the expense, and give users more information about other credible resources that can help them.</p>
+<section id="conclusion" class="level1">
+<h1><strong>Conclusion</strong></h1>
+<p>Through continuous improvement, our tool presents a significant opportunity to combat food deserts, giving small rural business owners the means to create sustainable grocery stores and uplift their communities. We can implement better ways to calculate the market size (like Voronoi and Reillys), include start-up costs while estimating the expense, and give users more information about other credible resources that can help them. We hope that our tool can benefit disadvantaged communities with low food access as well as bolster small business by encouraging investment from potential entrepreneurs.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
