@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Aaron Null, Alex Cory, Srika Raja and Harun Celik">
+<meta name="dcterms.date" content="2023-07-14">
+
+<title>Aaron N’s Blog - Using Data to Inform Decision Making for Rural Grocery Stores</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Aaron N’s Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Using Data to Inform Decision Making for Rural Grocery Stores</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Final</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Aaron Null, Alex Cory, Srika Raja and Harun Celik </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 14, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><img src="images/Grocery_team_banner.png" class="img-fluid"></p>
+<section id="introduction" class="level1">
+<h1><strong>Introduction</strong></h1>
+<p>In Iowa, as well as the United States generally, the lack of access to quality food continues to be a very important concern. In 2022, it was recorded by the Iowa Waste Reduction Center that 111 different communities in Iowa that met the USDA criteria for being food deserts.&nbsp;According to the USDA’s definition, a food desert is defined as an area with a poverty rate above 10% and not within 10 miles of a wholesome food seller or pantry. It is predicted that up to 41,500 Iowans could be living in communities like these, with low access to high quality, nutritious food. However, this is not just an Iowa problem: USDA researchers estimate that up to 19.5 million Americans had limited access to a supermarket or grocery store.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/food-deserts-map-united-states-crs-usda-1.webp" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Map of communities with low food access (Source: “Using Local Knowledge to Better Map Food Deserts”, Mark Altawheel, 2021</figcaption>
+</figure>
+</div>
+<p>Research points to multiple factors underlying the prevalence of these food deserts. Generally speaking, areas with lower population growth, higher poverty levels and lack of reliable transportation are more likely to suffer from low food access. In addition, low food access disproportionately impacts communities of racial and ethnic minorities.</p>
+<p>It has also been observed that the increased prevalence of dollar and convenient stores increase the barriers for investment for grocery stores in these smaller communities. Often, healthy food options cost more than cheaper, more convenient options. For those in disadvantaged, high poverty communities, the cost can be too much for many families even if these healthy options are nearby. In this way, competition from convenient food stores can have a damaging effect on a grocery stores profitability, as only larger supermarkets are often capable of lowering their prices to compete with these stores.</p>
+</section>
+<section id="our-project" class="level1">
+<h1>Our Project</h1>
+<p>We have teamed up with FFED ISU Extension and Outreach to produce an app to help potential grocery store owners find the right location for their store. Our hope is to help both entrepreneurs and consumers alike by aiding in the establishment of profitable stores to increase access to high quality food in areas where this access may be limited. We have created that an interactive map-based tool with potential rural grocery store owners in mind that lets them find optimal locations for their stores that are both profitable and enriching to these smaller communities.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/FFED.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Farm, Food and Enterprise Development (ISU Extension and Outreach)</figcaption>
+</figure>
+</div>
+<p>The commissioners of this project, the Farm, Food and Enterprise Development Department of Iowa State Extension and Outreach, provided us with the original formulas to be incorporated into the tool. Our primary task was partly one of translation: we had been given 3 different Excel spreadsheets, one for each undergraduate intern, for each of the primary components of the calculation. Our job was to incorporate their functionality into an interactive application. The sheets were divided as follows:</p>
+<ul>
+<li><p>Estimating Market Size</p></li>
+<li><p>Estimating Revenue</p></li>
+<li><p>Estimating Expenses</p></li>
+</ul>
+<p>The primary function of the tool is to take a user-specified location (in the form of an address) and estimate its profitability based off of market size and estimated expenses.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/DSPGrocery.png" class="img-fluid figure-img" width="327"></p>
+<figcaption class="figure-caption">DSPG Grocery Team hex sticker</figcaption>
+</figure>
+</div>
+<section id="our-tools" class="level2">
+<h2 class="anchored" data-anchor-id="our-tools">Our Tools</h2>
+<section id="r" class="level3">
+<h3 class="anchored" data-anchor-id="r">R</h3>
+<p>One of the first decisions made was our choice of programming language. We decided to choose to use the R programming language for this project. Created by statisticians in 1993, R is a popular and effective language for data science and statistics. In addition, R has many great libraries for data visualization, such as ggplot2, that can help us effectively show relevant demographic data related to potential markets.</p>
+</section>
+<section id="r-shiny" class="level3">
+<h3 class="anchored" data-anchor-id="r-shiny">R Shiny</h3>
+<p>One of the advantages of R is that it grants us access to R Shiny, a package that allows for the creation of dynamic, easy-to-use data-driven web applications. Shiny apps can be easily incorporated into web pages and can take a variety of different types of user input. In addition, Shiny is highly compatible with packages such as leaflet for map displays and spatial analysis.</p>
+<p><img src="images/shiny.jpeg" class="img-fluid" width="470"></p>
+</section>
+<section id="census-data" class="level3">
+<h3 class="anchored" data-anchor-id="census-data">Census Data</h3>
+<p>In addition, R gives us access to the TidyCensus, a package that makes it very easy to retrieve Census data for any location in the United States. TidyCensus acts as a channel for extracting specific data from the US Census Bureau database in a tidy format. This Census data is important for both our calculations and our data visualizations.</p>
+</section>
+<section id="tigris" class="level3">
+<h3 class="anchored" data-anchor-id="tigris">Tigris</h3>
+<p>Tigris is a package designed to help developers use Census Bureau TIGER/Line files. This is being used to find county and place info, and is being used to determine which cities are in the market area.</p>
+</section>
+<section id="google-places-api" class="level3">
+<h3 class="anchored" data-anchor-id="google-places-api">Google Places API</h3>
+<p>The Google Places API is being used to find nearby stores, and to convert addresses to GPS coordinates. These stores help to determine our market size (“buffer zone”) and factor in the effect on competition on store profitability.</p>
+</section>
+</section>
+<section id="list-of-data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="list-of-data-sources">List of Data Sources</h2>
+<ul>
+<li><p>American Community Survey</p></li>
+<li><p>U.S Decennial Census</p></li>
+<li><p>Salesgenie</p></li>
+<li><p>Google Places</p></li>
+</ul>
+</section>
+</section>
+<section id="estimating-market-size" class="level1">
+<h1>Estimating Market Size</h1>
+<p>One of the main functions of the app is estimating the market size, so we can figure out how many people would potentially shop at the proposed store. Using geospatial and demographic data we were able to make a model to accurately estimate how many shoppers might be in the store’s market area.</p>
+<p>The estimating market size section is broken down into three main components: metro population, rural population, and cities population.</p>
+<section id="population-functions" class="level2">
+<h2 class="anchored" data-anchor-id="population-functions">Population Functions</h2>
+<section id="metro-population" class="level3">
+<h3 class="anchored" data-anchor-id="metro-population">Metro Population</h3>
+<p>Metro Population is a function that determines the population of the city that the potential store would be in. This function uses the parsed address to select just the city the store is out of a data frame containing the population of all the towns in the county that the store is in.</p>
+</section>
+<section id="cities-population" class="level3">
+<h3 class="anchored" data-anchor-id="cities-population">Cities Population</h3>
+<p>Cities Population is a function that finds all the nearby cities and finds the total of their populations. This function uses a TidyCensus call to find the population of all the cities in the state, and then filters it down to be just the cities in our area. It then takes the sum of all the city populations.</p>
+</section>
+<section id="rural-population" class="level3">
+<h3 class="anchored" data-anchor-id="rural-population">Rural Population</h3>
+<p>Rural_Pop is a function that finds the population of all people who live in the market area but do not live in a town. This is done by finding the population of the whole county, and subtracting the people who live in all the towns in that area, then multiplying by the percentage of the county the area covers.</p>
+<p>The area calculations used in our functions are derived by finding the distance to the nearest store in each quadrant (NE, NW, SE, SW). We use that distance as the radius of a quarter circle to figure out how much reach the store has. This is a rudimentary way of determining the market region as the only thing it takes into account is distance to the closest store. This method ignores the radius that the other store would have. A more elegant solution to this would be Voronoi polygons, Reilly’s law of Retail Gravitation, or Huff’s Model.</p>
+</section>
+</section>
+<section id="future-potential-steps" class="level2">
+<h2 class="anchored" data-anchor-id="future-potential-steps">Future potential steps</h2>
+<section id="voronoi" class="level3">
+<h3 class="anchored" data-anchor-id="voronoi">Voronoi</h3>
+<p>A Voronoi diagram is a way of partitioning a plane into cells where all points within the cell are closer to a given seed, or in our case a store, than any other seed. Implementing these would be beneficial in order to get a more accurate model that would account for the other stores market area.</p>
+<p><img src="images/voronoi.png" class="img-fluid"></p>
+</section>
+<section id="reillys" class="level3">
+<h3 class="anchored" data-anchor-id="reillys">Reilly’s</h3>
+<p>Reilly’s law is an economic principle that states that people are more drawn to areas with a higher population than those with smaller populations. This is an excellent way to estimate market area, but is somewhat complicated. Maps are usually edited by hand to account for geographic barriers such as rivers, and there are various limitations such as the populations of the two cities having to be relatively similar.</p>
+</section>
+<section id="huffs-model" class="level3">
+<h3 class="anchored" data-anchor-id="huffs-model">Huff’s Model</h3>
+<p>Huff’s law is a probabilistic model for estimating consumer attraction. It states that the attractiveness of a store and the something called distance decay determine the likelihood of someone visiting the store. Distance decay is the idea that as people move farther and farther away, the likelihood exponentially decreases that they would visit the store. In the real world this would mean that even though a store might be 10 times more attractive than another, if it is 10 times farther away, they most likely will not travel to it.</p>
+</section>
+</section>
+</section>
+<section id="revenue-estimation" class="level1">
+<h1><strong>Revenue Estimation</strong></h1>
+<p>Estimating the revenue is important for calculating the overall profit of a step. Once we determined our market size, we need the exact number of shoppers and the average spending by each to get the revenue estimate</p>
+<section id="average-grocery-spend" class="level2">
+<h2 class="anchored" data-anchor-id="average-grocery-spend">Average Grocery Spend</h2>
+<p>The average per capita grocery spend is the average money each person in the US spends on groceries per year. This value acts as a baseline for how much we can expect each shopper to spend in a store. We created three functions that calculate this value and adjust for inflation.</p>
+<p>First, we calculate the average per capita grocery spending for 2022 by dividing the total grocery sales from IBIS by the total US population as of 1/1/2023. This is done by the function <code>Avg_Capita_Grocery_Spend()</code> . Since it is calculated for 2022, it should be adjusted for inflation from the base year(2022). CPI and RPP does this adjustment to the value in the functions <code>Adj_Capita_Grocery_Spend()</code> and <code>State_Adj_Capita_Grocery_Spend()</code>, respectively.</p>
+<ul>
+<li><p><strong>Consumer Price Index(CPI):</strong> Measure of the average change over time in the prices paid by urban consumers for a market basket of consumer goods and services. So, adjusting according to the CPI accounts for the overall inflation in the US.</p></li>
+<li><p><strong>Regional Price Parities(RPP):</strong> Measure the differences in price levels across states and metropolitan areas for a given year and are expressed as a percentage of the overall national price level. This value is 100 for the overall US, and it is lesser or higher than 100 depending on if the state’s price levels are lower or higher than the national average. Adjusting according to this measure gives that state’s average per capita spending on groceries for that year.</p></li>
+<li><p>Update and&nbsp;Maintenance</p></li>
+</ul>
+<table class="table">
+<caption>Money spent by different categories of shoppers:</caption>
+<tbody>
+<tr class="odd">
+<td><strong>Variable name</strong></td>
+<td><strong>Frequency</strong></td>
+<td><strong>Source</strong></td>
+<td><strong>Link</strong></td>
+<td><strong>Notes</strong></td>
+</tr>
+<tr class="even">
+<td>Total US Grocery Sales</td>
+<td>Optional</td>
+<td>IBIS</td>
+<td></td>
+<td>Default base year is taken as 2022</td>
+</tr>
+<tr class="odd">
+<td>Total US population</td>
+<td>Optional</td>
+<td>US Census Bureau</td>
+<td></td>
+<td>Default base year is taken as 2022</td>
+</tr>
+<tr class="even">
+<td>Estimated cumulative price increase(CPI)</td>
+<td>Yearly update/ Half yearly update</td>
+<td>US Bureau of Labor Statistics</td>
+<td><a href="https://data.bls.gov/timeseries/CUUR0000SA0" class="uri">https://data.bls.gov/timeseries/CUUR0000SA0</a></td>
+<td><p>CPI in the current year - CPI in the base year</p>
+<p>For now, defaulting as 7 for 2023</p></td>
+</tr>
+<tr class="odd">
+<td>State Index</td>
+<td>Yearly update</td>
+<td>BEA</td>
+<td><a href="https://tinyurl.com/2wvca7vy" class="uri">https://tinyurl.com/2wvca7vy</a></td>
+<td>Should be inputted by the user according to the store location.</td>
+</tr>
+</tbody>
+</table>
+<p>Since not all shoppers will have the same level of preference for all stores, it is important to consider and add weight to the proportion of money spent. To do this, the shoppers are classified into:</p>
+<ul>
+<li><p><strong><em>Primary Shoppers:</em></strong> The people doing most of the household grocery shopping in that store.</p></li>
+<li><p><strong><em>Secondary Shoppers:</em></strong> Regular visitors for smaller purchases but will often do their weekly shopping elsewhere.</p></li>
+<li><p><strong><em>Rare Shoppers:</em></strong> People who are very occasional shoppers(only when necessary).</p>
+<p>Shopper choosing a store as a primary store or not depends on many factors, one of the main ones being distance and accessibility. So we classify the markets based on distance or location into:</p></li>
+<li><p><strong><em>Metro</em>:</strong> The population of the city in which the store is planned to open</p></li>
+<li><p><strong><em>Town:</em></strong> Population of all the cities in the market</p></li>
+<li><p><strong><em>Rural:</em></strong> Total rural population of the market</p></li>
+</ul>
+<p>From the above classifications, it would be reasonable to expect more primary customers from metro markets than from elsewhere because of the proximity. So the weight is added using the default percentages of primary, secondary, and rare shoppers from the different markets.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Primary</th>
+<th>Secondary</th>
+<th>Rare</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Metro</strong></td>
+<td>50%</td>
+<td>40%</td>
+<td>10%</td>
+</tr>
+<tr class="even">
+<td><strong>Town</strong></td>
+<td>30%</td>
+<td>50%</td>
+<td>20%</td>
+</tr>
+<tr class="odd">
+<td><strong>Rural</strong></td>
+<td>30%</td>
+<td>50%</td>
+<td>20%</td>
+</tr>
+</tbody>
+</table>
+<p>The total number of primary, secondary, and rare shoppers is calculated by multiplying the corresponding percentage with our market’s metro, town, and rural population calculated in the previous section. This calculation is done in the functions <code>Primary_Shoppers_Count()</code> , <code>Secondary_Shoppers_Count()</code> , and <code>Rare_Shoppers_Count()</code> .</p>
+<p>As Primary shoppers do most of their shopping in that grocery store, the percentage of the average they spend(60%) is much more than that spent by the secondary shoppers(25%) or rare shoppers(5%). The total spend for each category of shoppers is calculated individually by the functions <code>Total_Spend_Primary_Shoppers()</code> , <code>Total_Spend_Secondary_Shoppers()</code> , and <code>Total_Spend_Rare_Shoppers()</code> by multiplying the percentage, number of shoppers, and average grocery spend.</p>
+</section>
+<section id="total-revenue" class="level2">
+<h2 class="anchored" data-anchor-id="total-revenue">Total Revenue</h2>
+<p>The function, <code>Total_Estimate_Revenue()</code> , calculates the final total estimated revenue by summing the outputs from the <code>Total_Spend_Primary_Shoppers()</code> , <code>Total_Spend_Secondary_Shoppers()</code> , and <code>Total_Spend_Rare_Shoppers()</code> .</p>
+</section>
+<section id="grocery-sales-visualizations" class="level2">
+<h2 class="anchored" data-anchor-id="grocery-sales-visualizations">Grocery Sales Visualizations:</h2>
+<p>As discussed before, a shopper choosing a store as a primary store or not depends on a lot of other factors like the competition from the big chain grocery stores, other non-chain grocery stores, and dollar stores, which provide them a cheaper alternative. So to understand how the store location and presence of competitors affect a store, we analyzed the Sales Genie’s data on dollar stores and grocery stores in Iowa. We classified the cities in our data set according to the city group classification based on population and adjacency to a big city. This classification classifies the cities into these eight groups:</p>
+<ul>
+<li><p>Group 1: 10,000 or greater Core county of a metropolitan statistical area (MSA) </p></li>
+<li><p>Group 2: 10,000 or greater Non-core MSA county or non-metropolitan county </p></li>
+<li><p>Group 3: 2,500 to 9,999 Non-metropolitan county </p></li>
+<li><p>Group 4: 2,500 to 9,999 Metropolitan county </p></li>
+<li><p>Group 5N: 500 to 2,499 Non-metropolitan county, not adjacent to an MSA</p></li>
+<li><p>Group 5A: 500 to 2,499 Non-metropolitan county, adjacent to an MSA </p></li>
+<li><p>Group 6: 500 to 2,499 Metropolitan county </p></li>
+<li><p>Group 7: 250 to 499. Any county</p></li>
+<li><p>Rest of State: 249 or fewer Any county </p></li>
+</ul>
+<p>Of these, we specifically focused on the cities with a population of less than 2500 and created a plot that shows the number of the different types of stores in each city group classification.</p>
+<p><img src="images/srika_plotly_final.png" class="img-fluid"></p>
+<p>We see that there are very less chain grocery stores in call these cities with a population of less than 2500. As we go more and more rural, the only competition in the city is from the other non-chain grocery stores in that area. The distribution of the sales volume for various non-chain grocery stores is also shown in the dashboard. These visualizations will help small rural grocery business owners to design their stores depending on the preexisting competition.</p>
+</section>
+</section>
+<section id="expense-estimation" class="level1">
+<h1><strong>Expense Estimation</strong></h1>
+<p>One essential element of the calculation for store profitability is the estimation for the various expenses that a potential owner might have to contend with when they open their store. This tool allows for users to test the profitability of different budgetary percentages of various expense categories for grocery stores to help determine the resources necessary for a store to succeed in a given area.</p>
+<section id="bizminervertical-iq-percentages" class="level2">
+<h2 class="anchored" data-anchor-id="bizminervertical-iq-percentages"><strong>Bizminer/Vertical IQ Percentages</strong></h2>
+<p>Many of the functions used in this package incorporate percentages taken from both Bizminer and Vertical IQ, two financial analysis and market research firms. The value of these percentages determine how much of the total estimated revenue will be spent on a given category of expense. These percentages are based off of industry 3-year averages for grocery stores as of 2022. In this tool, these default percentages are the averages taken from Bizminer and Vertical IQ’s individual 3-year averages. Although the user has the freedom to choose their own percentage via sliders in the side panel, these Bizminer/Vertical IQ percentages are set as defaults.</p>
+</section>
+<section id="categories-of-expenses" class="level2">
+<h2 class="anchored" data-anchor-id="categories-of-expenses"><strong>Categories of Expenses</strong></h2>
+<p>Five different categories of expenses are accounted for in this tool:</p>
+<section id="cost-of-goods-sold" class="level3">
+<h3 class="anchored" data-anchor-id="cost-of-goods-sold"><strong>Cost of Goods Sold</strong></h3>
+<p>This represents how much of the total estimated revenue is spent on the cost of goods (inventory). The calculation for this item takes the total estimated revenue and the selected gross margin percentage into account.</p>
+<p>Associated Functions:</p>
+<ul>
+<li><p><code>Gross_Margin()</code></p></li>
+<li><p><code>Cost_of_Goods_Sold()</code></p></li>
+</ul>
+</section>
+<section id="operating-expenses" class="level3">
+<h3 class="anchored" data-anchor-id="operating-expenses"><strong>Operating Expenses</strong></h3>
+<p>Comprises expenses such as compensation for company officers, employee wages and other common operating expenses of grocery stores. Users can select percentages for each of these expenses or they can rely on the default value provided by Bizminer.</p>
+<p>Associated Functions:</p>
+<ul>
+<li><p><code>Employee_Wages()</code></p></li>
+<li><p><code>Officer_Compensation()</code></p></li>
+<li><p><code>Other_Operating_Expense()</code></p></li>
+</ul>
+</section>
+<section id="asset-depreciation" class="level3">
+<h3 class="anchored" data-anchor-id="asset-depreciation"><strong>Asset Depreciation</strong></h3>
+<p>Covers the annual loss from the depreciation of various assets required to own and operate a grocery store. The value of a list of assets are divided by their associated use life to determine the annual lost in value from asset depreciation. The tool gives the user the option to fill out a form for one of two scenarios: one if the user plans to own a building and the other if the user plans to rent.</p>
+<p>Associated Functions:</p>
+<ul>
+<li><p><code>Depreciation_1()</code></p></li>
+<li><p><code>Depreciation_2()</code></p></li>
+</ul>
+</section>
+<section id="loan-interest" class="level3">
+<h3 class="anchored" data-anchor-id="loan-interest"><strong>Loan Interest</strong></h3>
+<p>Covers the annual interest on a user-specified loan (if a loan was taken out). The annual cost of interest on a loan is calculated from the loan amount and its annual interest rate, entered by the user.</p>
+<p>Associated Function:</p>
+<ul>
+<li><code>Interest_Expense()</code></li>
+</ul>
+</section>
+<section id="rent-if-leasing-building" class="level3">
+<h3 class="anchored" data-anchor-id="rent-if-leasing-building"><strong>Rent (if leasing building)</strong></h3>
+<p>This covers the annual cost of rent for a leased building. Users can enter their monthly rate of rent to determine the annual cost of rent for their building.</p>
+<p>Associated Function:</p>
+<ul>
+<li><code>Annual_Rent()</code></li>
+</ul>
+</section>
+</section>
+<section id="secondary-sources-of-income" class="level2">
+<h2 class="anchored" data-anchor-id="secondary-sources-of-income"><strong>Secondary Sources of Income</strong></h2>
+<p>Another important factor to consider is secondary sources of income. These are broken up into two main categories:</p>
+<section id="income-from-interest" class="level3">
+<h3 class="anchored" data-anchor-id="income-from-interest"><strong>Income from Interest</strong></h3>
+<p>Income collected from interest-bearing assets.</p>
+<p>Associated Function:</p>
+<ul>
+<li><code>Interest_Income()</code></li>
+</ul>
+</section>
+<section id="other-income" class="level3">
+<h3 class="anchored" data-anchor-id="other-income"><strong>Other Income</strong></h3>
+<p>This could include special services outside the revenue from sold goods alone, such as special grocery delivery services or membership fees for discount clubs, among other things.</p>
+<p>Associated Function:</p>
+<ul>
+<li><code>Other_Income()</code></li>
+</ul>
+</section>
+</section>
+<section id="pre-tax-profit" class="level2">
+<h2 class="anchored" data-anchor-id="pre-tax-profit"><strong>Pre-Tax Profit</strong></h2>
+<p>In the tool, the estimated expenses will be subtracted from the total estimated revenue and the estimated secondary income will then be added in the calculation for the estimated pre-tax profit . Users will be able to adjust the percentages to suite their individual needs and determine profitability taking both expenses and market size into account.</p>
+</section>
+<section id="updates-and-maintenance" class="level2">
+<h2 class="anchored" data-anchor-id="updates-and-maintenance">Updates and Maintenance</h2>
+<p>Since the Bizminer/Vertical IQ percentages used in the calculations for the functions in this section are based on three-year averages, they will need to be updated annually.</p>
+</section>
+</section>
+<section id="demographic-information" class="level1">
+<h1><strong>Demographic Information</strong></h1>
+<p>Data from the American Community Survey (2021) and the Decennial Census (2020) were pulled in order to display data visualizations relevant to food desert status and the understanding the market of a given location. This data is displayed in three bar plots and one data table inside a dashboard in the tool. Based on the market size around a user-specified address, the data is retrieved for the all of the counties that hold a city that resides within a circular buffer zone around that location.</p>
+<p>Key variables shown for each county in the dashboard:</p>
+<ul>
+<li><p>Median Household Income: correlates with access to food, provides important information about the store’s potential customer base</p></li>
+<li><p>Employment Status: Indicator of poverty, highlights which areas may benefit most from the additional jobs provided by a potential store</p></li>
+<li><p>Languages Spoken (other than English): Helps highlight the cultural makeup of a market area</p></li>
+<li><p>Race/Hispanic Origin: Areas with higher proportions of minority groups are most likely to be living in food deserts</p></li>
+<li><p>Total Population: Foundational for understanding market size (included alongside Race/Hispanic Origin table)</p></li>
+</ul>
+<p>In addition to purely economic metrics, its important to highlight the relationship between the proportion of racial and ethnic minorities and food desert status of communities. Moreover, having insight into the racial and cultural dynamics of a community allows potential owners to make more informed decisions about where their individual plans for their stores are most likely to succeed (for example, a Mexican immigrant entrepreneur looking to open a small market that caters to Hispanics).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/language_plot2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Plot showing the three most commonly spoken languages of each county other than English (2021)</figcaption>
+</figure>
+</div>
+<p>Since the data taken from the American Community Survey is based off of representative sampling, each of the bar plots display corresponding margin of error bars for each county’s estimate. The estimate and the margin of error can also be found by hovering the cursor over each bar. The Race/Hispanic Origin Table, on the other hand, is taken from the Decennial Census and contains counts of the total population, thus lacking these error bars.</p>
+</section>
+<section id="design-decisions" class="level1">
+<h1>Design Decisions</h1>
+<p>When designing our product, we created a strengths, weaknesses, opportunities, and threats matrix to decide what software we should use. For the back-end code we decided to go with R as it is the industry standard for data science, and it is easy to integrate with our front-end. For the front end we went with R Shiny. We went with Shiny because of the clean, easy to set up webpages with intuitive user interfaces. It allowed us to make sliders to let users manually change variables to better fit their circumstances. Another feature of Shiny is its ability to incorporate maps, which we are using in our product to display the market area.</p>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results"><strong>Results</strong></h2>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion"><strong>Conclusion</strong></h2>
+<p>Through continuous improvement, our tool presents a significant opportunity to combat food deserts, giving small rural business owners the means to create sustainable grocery stores and uplift their communities. We can implement better ways to calculate the market size (like Voronoi and Reillys), include start-up costs while estimating the expense, and give users more information about other credible resources that can help them.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
