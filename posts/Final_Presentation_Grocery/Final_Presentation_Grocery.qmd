@@ -3,7 +3,7 @@ title: "Using Data to Inform Decision Making for Rural Grocery Stores"
 author: "Aaron Null, Alex Cory, Srika Raja and Harun Celik"
 date: "2023-07-14"
 categories: "Final"
-theme: mint
+theme: minty
 ---
 
 ![](images/Grocery_team_banner.png)
