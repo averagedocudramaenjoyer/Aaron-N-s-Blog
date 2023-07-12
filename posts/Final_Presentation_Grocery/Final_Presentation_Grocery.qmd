@@ -3,6 +3,7 @@ title: "Using Data to Inform Decision Making for Rural Grocery Stores"
 author: "Aaron Null, Alex Cory, Srika Raja and Harun Celik"
 date: "2023-07-14"
 categories: "Final"
+theme: mint
 ---
 
 ![](images/Grocery_team_banner.png)
@@ -11,7 +12,7 @@ categories: "Final"
 
 In Iowa, as well as the United States generally, the lack of access to quality food continues to be a very important concern. In 2022, it was recorded by the Iowa Waste Reduction Center that 111 different communities in Iowa that met the USDA criteria for being food deserts. According to the USDA's definition, a food desert is defined as an area with a poverty rate above 10% and not within 10 miles of a wholesome food seller or pantry. It is predicted that up to 41,500 Iowans could be living in communities like these, with low access to high quality, nutritious food. However, this is not just an Iowa problem: USDA researchers estimate that up to 19.5 million Americans had limited access to a supermarket or grocery store.
 
-![Map of communities with low food access (Source: "Using Local Knowledge to Better Map Food Deserts", Mark Altawheel, 2021](images/food-deserts-map-united-states-crs-usda-1.webp)
+![Map of communities with low food access (Source: "Using Local Knowledge to Better Map Food Deserts", Mark Altawheel, 2021)](images/food-deserts-map-united-states-crs-usda-1.webp)
 
 Research points to multiple factors underlying the prevalence of these food deserts. Generally speaking, areas with lower population growth, higher poverty levels and lack of reliable transportation are more likely to suffer from low food access. In addition, low food access disproportionately impacts communities of racial and ethnic minorities.
 
@@ -54,6 +55,10 @@ In addition, R gives us access to the TidyCensus, a package that makes it very e
 ### Tigris
 
 Tigris is a package designed to help developers use Census Bureau TIGER/Line files. This is being used to find county and place info, and is being used to determine which cities are in the market area.
+
+### Google Geocoding API
+
+The Google Geocoding API is used to take an address and find the corresponding latitude and longitude for that address. This is used to help gather information about the communities around a given point on the map.
 
 ### Google Places API
 
@@ -109,7 +114,7 @@ Huff's law is a probabilistic model for estimating consumer attraction. It state
 
 # **Revenue Estimation**
 
-Estimating the revenue is important for calculating the overall profit of a step. Once we determined our market size, we need the exact number of shoppers and the average spending by each to get the revenue estimate
+Estimating the revenue is important for calculating the overall profit of a step. The functions in this section of the package estimate the total revenue of a store using the estimated market size, three different shopper type categories, and the average per capita spending on groceries.
 
 ## Average Grocery Spend
 
@@ -117,11 +122,11 @@ The average per capita grocery spend is the average money each person in the US 
 
 First, we calculate the average per capita grocery spending for 2022 by dividing the total grocery sales from IBIS by the total US population as of 1/1/2023. This is done by the function `Avg_Capita_Grocery_Spend()` . Since it is calculated for 2022, it should be adjusted for inflation from the base year(2022). CPI and RPP does this adjustment to the value in the functions `Adj_Capita_Grocery_Spend()` and `State_Adj_Capita_Grocery_Spend()`, respectively.
 
--   **Consumer Price Index(CPI):** Measure of the average change over time in the prices paid by urban consumers for a market basket of consumer goods and services. So, adjusting according to the CPI accounts for the overall inflation in the US.
+-   **Consumer Price Index (CPI):** Measure of the average change over time in the prices paid by urban consumers for a market basket of consumer goods and services. So, adjusting according to the CPI accounts for the overall inflation in the US.
 
--   **Regional Price Parities(RPP):** Measure the differences in price levels across states and metropolitan areas for a given year and are expressed as a percentage of the overall national price level. This value is 100 for the overall US, and it is lesser or higher than 100 depending on if the state's price levels are lower or higher than the national average. Adjusting according to this measure gives that state's average per capita spending on groceries for that year.
+-   **Regional Price Parities (RPP):** Measure the differences in price levels across states and metropolitan areas for a given year and are expressed as a percentage of the overall national price level. This value is 100 for the overall US, and it is lesser or higher than 100 depending on if the state's price levels are lower or higher than the national average. Adjusting according to this measure gives that state's average per capita spending on groceries for that year.
 
--   Update and Maintenance
+### Update and Maintenance
 
 +------------------------------------------+-----------------------------------+-------------------------------+-----------------------------------------------+-----------------------------------------------------------------+
 | **Variable name**                        | **Frequency**                     | **Source**                    | **Link**                                      | **Notes**                                                       |
@@ -137,7 +142,7 @@ First, we calculate the average per capita grocery spending for 2022 by dividing
 | State Index                              | Yearly update                     | BEA                           | <https://tinyurl.com/2wvca7vy>                | Should be inputted by the user according to the store location. |
 +------------------------------------------+-----------------------------------+-------------------------------+-----------------------------------------------+-----------------------------------------------------------------+
 
-: Money spent by different categories of shoppers:
+### Money spent by different categories of shoppers
 
 Since not all shoppers will have the same level of preference for all stores, it is important to consider and add weight to the proportion of money spent. To do this, the shoppers are classified into:
 
@@ -147,15 +152,7 @@ Since not all shoppers will have the same level of preference for all stores, it
 
 -   ***Rare Shoppers:*** People who are very occasional shoppers(only when necessary).
 
-    Shopper choosing a store as a primary store or not depends on many factors, one of the main ones being distance and accessibility. So we classify the markets based on distance or location into:
-
--   ***Metro*****:** The population of the city in which the store is planned to open
-
--   ***Town:*** Population of all the cities in the market
-
--   ***Rural:*** Total rural population of the market
-
-From the above classifications, it would be reasonable to expect more primary customers from metro markets than from elsewhere because of the proximity. So the weight is added using the default percentages of primary, secondary, and rare shoppers from the different markets.
+Shoppers choosing a store as a primary store or not depends on many factors, one of the main ones being distance and accessibility. It would be reasonable to expect more primary customers from metro markets than from elsewhere because of their increased proximity to the address of the store. So the weight is added using the default percentages of primary, secondary, and rare shoppers from the different markets.
 
 |           | Primary | Secondary | Rare |
 |-----------|---------|-----------|------|
@@ -165,7 +162,7 @@ From the above classifications, it would be reasonable to expect more primary cu
 
 The total number of primary, secondary, and rare shoppers is calculated by multiplying the corresponding percentage with our market's metro, town, and rural population calculated in the previous section. This calculation is done in the functions `Primary_Shoppers_Count()` , `Secondary_Shoppers_Count()` , and `Rare_Shoppers_Count()` .
 
-As Primary shoppers do most of their shopping in that grocery store, the percentage of the average they spend(60%) is much more than that spent by the secondary shoppers(25%) or rare shoppers(5%). The total spend for each category of shoppers is calculated individually by the functions `Total_Spend_Primary_Shoppers()` , `Total_Spend_Secondary_Shoppers()` , and `Total_Spend_Rare_Shoppers()` by multiplying the percentage, number of shoppers, and average grocery spend.
+As primary shoppers do most of their shopping in that grocery store, the percentage of the average they spend(60%) is much more than that spent by the secondary shoppers(25%) or rare shoppers(5%). The total spend for each category of shoppers is calculated individually by the functions `Total_Spend_Primary_Shoppers()` , `Total_Spend_Secondary_Shoppers()` , and `Total_Spend_Rare_Shoppers()` by multiplying the percentage, number of shoppers, and average grocery spend.
 
 ## Total Revenue
 
@@ -195,9 +192,9 @@ As discussed before, a shopper choosing a store as a primary store or not depend
 
 Of these, we specifically focused on the cities with a population of less than 2500 and created a plot that shows the number of the different types of stores in each city group classification.
 
-![](images/srika_plotly_final.png)
+![](images/srika_plotly_2.png)
 
-We see that there are very less chain grocery stores in call these cities with a population of less than 2500. As we go more and more rural, the only competition in the city is from the other non-chain grocery stores in that area. The distribution of the sales volume for various non-chain grocery stores is also shown in the dashboard. These visualizations will help small rural grocery business owners to design their stores depending on the preexisting competition.
+We see that there are significantly less chain grocery stores in all of these cities with a population of less than 2,500. As we go more and more rural, the only competition in the city is from the other non-chain grocery stores in that area. The distribution of the sales volume for various non-chain grocery stores is also shown in the dashboard. These visualizations will help small rural grocery business owners to design their stores depending on the preexisting competition.
 
 # **Expense Estimation**
 
@@ -223,7 +220,7 @@ Associated Functions:
 
 ### **Operating Expenses**
 
-Comprises expenses such as compensation for company officers, employee wages and other common operating expenses of grocery stores. Users can select percentages for each of these expenses or they can rely on the default value provided by Bizminer.
+Comprises expenses such as compensation for company officers, employee wages and other common operating expenses of grocery stores. Users can select percentages for each of these expenses or they can rely on the default value provided by Bizminer/Vertical IQ.
 
 Associated Functions:
 
@@ -309,12 +306,18 @@ In addition to purely economic metrics, its important to highlight the relations
 
 Since the data taken from the American Community Survey is based off of representative sampling, each of the bar plots display corresponding margin of error bars for each county's estimate. The estimate and the margin of error can also be found by hovering the cursor over each bar. The Race/Hispanic Origin Table, on the other hand, is taken from the Decennial Census and contains counts of the total population, thus lacking these error bars.
 
-# Design Decisions
+# **Results**
 
-When designing our product, we created a strengths, weaknesses, opportunities, and threats matrix to decide what software we should use. For the back-end code we decided to go with R as it is the industry standard for data science, and it is easy to integrate with our front-end. For the front end we went with R Shiny. We went with Shiny because of the clean, easy to set up webpages with intuitive user interfaces. It allowed us to make sliders to let users manually change variables to better fit their circumstances. Another feature of Shiny is its ability to incorporate maps, which we are using in our product to display the market area.
+This DSPG project produced the following as deliverables:
 
-## **Results**
+-   Rural grocery stores profitability dashboard
 
-## **Conclusion**
+-   The DSPG Grocery (DSPGrocery) R package containing the relevant functions for the tool
 
-Through continuous improvement, our tool presents a significant opportunity to combat food deserts, giving small rural business owners the means to create sustainable grocery stores and uplift their communities. We can implement better ways to calculate the market size (like Voronoi and Reillys), include start-up costs while estimating the expense, and give users more information about other credible resources that can help them.
+-   Salesgenie Tableau Dashboard
+
+-   Blogs that chronicle the team's progress
+
+# **Conclusion**
+
+Through continuous improvement, our tool presents a significant opportunity to combat food deserts, giving small rural business owners the means to create sustainable grocery stores and uplift their communities. We can implement better ways to calculate the market size (like Voronoi and Reillys), include start-up costs while estimating the expense, and give users more information about other credible resources that can help them. We hope that our tool can benefit disadvantaged communities with low food access as well as bolster small business by encouraging investment from potential entrepreneurs.
