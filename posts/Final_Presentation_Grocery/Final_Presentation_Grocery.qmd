@@ -6,7 +6,7 @@ categories: "Final"
 theme: minty
 toc: true
 toc-depth: 2
-toc_title: "Contents"
+toc-title: "Contents"
 ---
 
 ![](images/Grocery_team_banner.png)
