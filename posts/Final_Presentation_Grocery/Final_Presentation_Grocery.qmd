@@ -324,3 +324,5 @@ This DSPG project produced the following as deliverables:
 # **Conclusion**
 
 Through continuous improvement, our tool presents a significant opportunity to combat food deserts, giving small rural business owners the means to create sustainable grocery stores and uplift their communities. We can implement better ways to calculate the market size (like Voronoi and Reillys), include start-up costs while estimating the expense, and give users more information about other credible resources that can help them. We hope that our tool can benefit disadvantaged communities with low food access as well as bolster small business by encouraging investment from potential entrepreneurs.
+
+![Jewell Market in Jewell, Iowa: A small town grocery store recently saved from closing its doors by young grocer Nick Graham in 2020.](images/Jewell-Market.jpg)
