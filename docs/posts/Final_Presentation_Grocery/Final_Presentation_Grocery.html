@@ -146,14 +146,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><strong>Introduction</strong></a></li>
   <li><a href="#our-project" id="toc-our-project" class="nav-link" data-scroll-target="#our-project">Our Project</a>
   <ul class="collapse">
-  <li><a href="#our-tools" id="toc-our-tools" class="nav-link" data-scroll-target="#our-tools">Our Tools</a></li>
-  <li><a href="#list-of-data-sources" id="toc-list-of-data-sources" class="nav-link" data-scroll-target="#list-of-data-sources">List of Data Sources</a></li>
+  <li><a href="#tools" id="toc-tools" class="nav-link" data-scroll-target="#tools">Tools</a></li>
   </ul></li>
   <li><a href="#estimating-market-size" id="toc-estimating-market-size" class="nav-link" data-scroll-target="#estimating-market-size">Estimating Market Size</a>
   <ul class="collapse">
   <li><a href="#population-functions" id="toc-population-functions" class="nav-link" data-scroll-target="#population-functions">Population Functions</a></li>
   <li><a href="#market-area" id="toc-market-area" class="nav-link" data-scroll-target="#market-area">Market Area</a></li>
-  <li><a href="#future-potential-steps" id="toc-future-potential-steps" class="nav-link" data-scroll-target="#future-potential-steps">Future potential steps</a></li>
+  <li><a href="#alternative-approaches-to-determining-market-size" id="toc-alternative-approaches-to-determining-market-size" class="nav-link" data-scroll-target="#alternative-approaches-to-determining-market-size">Alternative Approaches to Determining Market Size</a></li>
   </ul></li>
   <li><a href="#revenue-estimation" id="toc-revenue-estimation" class="nav-link" data-scroll-target="#revenue-estimation"><strong>Revenue Estimation</strong></a>
   <ul class="collapse">
@@ -196,7 +195,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="our-project" class="level1">
 <h1>Our Project</h1>
-<p>We have teamed up with FFED ISU Extension and Outreach to produce an app to help potential grocery store owners find the right location for their store. Our hope is to help both entrepreneurs and consumers alike by aiding in the establishment of profitable stores to increase access to high quality food in areas where this access may be limited. We have created that an interactive map-based tool with potential rural grocery store owners in mind that lets them find optimal locations for their stores that are both profitable and enriching to these smaller communities.</p>
+<p>We have teamed up with FFED ISU Extension and Outreach to produce an app to help evaluate the feasibility of rural grocery stores based on their proposed location. Our hope is to help both entrepreneurs and consumers alike by aiding in the establishment of profitable stores and increasing access to high quality food in areas where this access may be limited.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/FFED.png" class="img-fluid figure-img"></p>
@@ -216,42 +215,37 @@ ul.task-list li input[type="checkbox"] {
 <figcaption class="figure-caption">DSPG Grocery Team hex sticker</figcaption>
 </figure>
 </div>
-<section id="our-tools" class="level2">
-<h2 class="anchored" data-anchor-id="our-tools">Our Tools</h2>
+<section id="tools" class="level2">
+<h2 class="anchored" data-anchor-id="tools">Tools</h2>
 <section id="r" class="level3">
 <h3 class="anchored" data-anchor-id="r">R</h3>
-<p>One of the first decisions made was our choice of programming language. We decided to choose to use the R programming language for this project. Created by statisticians in 1993, R is a popular and effective language for data science and statistics. In addition, R has many great libraries for data visualization, such as ggplot2, that can help us effectively show relevant demographic data related to potential markets.</p>
+<p>We decided to use the R programming language for this project. Created by statisticians in 1993, R is a popular and effective language for data science and statistics. In addition, R has many great libraries for data visualization, such as ggplot2, that can help us effectively show relevant demographic data related to potential markets.</p>
 </section>
 <section id="r-shiny" class="level3">
 <h3 class="anchored" data-anchor-id="r-shiny">R Shiny</h3>
-<p>One of the advantages of R is that it grants us access to R Shiny, a package that allows for the creation of dynamic, easy-to-use data-driven web applications. Shiny apps can be easily incorporated into web pages and can take a variety of different types of user input. In addition, Shiny is highly compatible with packages such as leaflet for map displays and spatial analysis.</p>
+<p>One of the advantages of R is that it grants us access to <a href="https://www.rstudio.com/products/shiny/">R Shiny</a>, a package that allows for the creation of dynamic, easy-to-use data-driven web applications. Shiny apps can be easily incorporated into web pages and can take a variety of different types of user input. In addition, Shiny is highly compatible with packages such as leaflet for map displays and spatial analysis.</p>
 <p><img src="images/shiny.jpeg" class="img-fluid" width="470"></p>
 </section>
-<section id="census-data" class="level3">
-<h3 class="anchored" data-anchor-id="census-data">Census Data</h3>
-<p>In addition, R gives us access to the TidyCensus, a package that makes it very easy to retrieve Census data for any location in the United States. TidyCensus acts as a channel for extracting specific data from the US Census Bureau database in a tidy format. This Census data is important for both our calculations and our data visualizations.</p>
+<section id="tidycensus" class="level3">
+<h3 class="anchored" data-anchor-id="tidycensus">TidyCensus</h3>
+<p>In addition, R gives us access to the <a href="https://walker-data.com/tidycensus/">TidyCensus</a>, a package that makes it very easy to retrieve Census data for any location in the United States. TidyCensus acts as a channel for extracting specific data from the US Census Bureau database in a tidy format. This Census data is important for both our calculations and our data visualizations.</p>
 </section>
 <section id="tigris" class="level3">
 <h3 class="anchored" data-anchor-id="tigris">Tigris</h3>
-<p>Tigris is a package designed to help developers use Census Bureau TIGER/Line files. This is being used to find county and place info, and is being used to determine which cities are in the market area.</p>
+<p><a href="https://www.rdocumentation.org/packages/tigris/versions/2.0.3">Tigris</a> is a package designed to help developers use Census Bureau TIGER/Line files. This is being used to find county and place info, and is being used to determine which cities are in the market area.</p>
 </section>
 <section id="google-geocoding-api" class="level3">
 <h3 class="anchored" data-anchor-id="google-geocoding-api">Google Geocoding API</h3>
-<p>The Google Geocoding API is used to take an address and find the corresponding latitude and longitude for that address. This is used to help gather information about the communities around a given point on the map.</p>
+<p><a href="https://developers.google.com/maps/documentation/geocoding/overview">The Google Geocoding API</a> is used to take an address and find the corresponding latitude and longitude for that address. This is used to help gather information about the communities around a given point on the map.</p>
 </section>
 <section id="google-places-api" class="level3">
 <h3 class="anchored" data-anchor-id="google-places-api">Google Places API</h3>
-<p>The Google Places API is being used to find nearby stores, and to convert addresses to GPS coordinates. These stores help to determine our market size (“buffer zone”) and factor in the effect on competition on store profitability.</p>
+<p><a href="https://developers.google.com/maps/documentation/places/web-service/overview">The Google Places API</a> is being used to find nearby stores, and to convert addresses to GPS coordinates. These stores help to determine our market size (“buffer zone”) and factor in the effect on competition on store profitability.</p>
 </section>
+<section id="data-sources" class="level3">
+<h3 class="anchored" data-anchor-id="data-sources">Data Sources</h3>
+<p><a href="https://dspg-2023.github.io/Grocery/articles/DataSourcesAndReferences.html">List of Data Sources</a>.</p>
 </section>
-<section id="list-of-data-sources" class="level2">
-<h2 class="anchored" data-anchor-id="list-of-data-sources">List of Data Sources</h2>
-<ul>
-<li><p>American Community Survey</p></li>
-<li><p>U.S Decennial Census</p></li>
-<li><p>Salesgenie</p></li>
-<li><p>Google Places</p></li>
-</ul>
 </section>
 </section>
 <section id="estimating-market-size" class="level1">
@@ -270,15 +264,15 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="rural-population" class="level3">
 <h3 class="anchored" data-anchor-id="rural-population">Rural Population</h3>
-<p>Rural_Pop is a function that finds the population of all people who live in the market area but do not live in a town. This is done by finding the population of the whole county, and subtracting the people who live in all the towns in that area, then multiplying by the percentage of the county the area covers.</p>
+<p>Rural Population is a function that finds the population of all people who live in the market area but do not live in a town. This is done by finding the population of the whole county, and subtracting the people who live in all the towns in that area, then multiplying by the percentage of the county the area covers.</p>
 </section>
 </section>
 <section id="market-area" class="level2">
 <h2 class="anchored" data-anchor-id="market-area">Market Area</h2>
 <p>The area calculations used in our functions are derived by finding the distance to the nearest store in each quadrant (NE, NW, SE, SW). We divide that distance by two to account for the other store’s market area, then we use that distance as the radius of a quarter circle to figure out how much reach the store has. A more elegant solution to this would be Voronoi polygons, Reilly’s law of Retail Gravitation, or Huff’s Model.</p>
 </section>
-<section id="future-potential-steps" class="level2">
-<h2 class="anchored" data-anchor-id="future-potential-steps">Future potential steps</h2>
+<section id="alternative-approaches-to-determining-market-size" class="level2">
+<h2 class="anchored" data-anchor-id="alternative-approaches-to-determining-market-size">Alternative Approaches to Determining Market Size</h2>
 <section id="voronoi" class="level3">
 <h3 class="anchored" data-anchor-id="voronoi">Voronoi</h3>
 <p>A Voronoi diagram is a way of partitioning a plane into cells where all points within the cell are closer to a given seed, or in our case a store, than any other seed. Implementing these would be beneficial in order to get a more accurate model that scale to the number of neighboring stores.</p>
@@ -523,18 +517,18 @@ ul.task-list li input[type="checkbox"] {
 <p>This DSPG project produced the following as deliverables:</p>
 <ul>
 <li><p>Rural grocery stores profitability dashboard</p></li>
-<li><p>The DSPG Grocery (DSPGrocery) R package containing the relevant functions for the tool</p></li>
-<li><p>Salesgenie Tableau Dashboard</p></li>
-<li><p>Blogs that chronicle the team’s progress</p></li>
+<li><p><a href="https://github.com/DSPG-2023/Grocery">The DSPG Grocery (DSPGrocery) R package containing the relevant functions for the tool</a></p></li>
+<li><p><a href="https://dspg-2023.github.io/Grocery/">Reference page for the DSPG Grocery package</a></p></li>
+<li><p><a href="https://dspg-2023.github.io/DSPG2023/allBlogs.html">Blogs that chronicle the team’s progress</a></p></li>
 </ul>
 </section>
 <section id="conclusion" class="level1">
 <h1><strong>Conclusion</strong></h1>
-<p>Through continuous improvement, our tool presents a significant opportunity to combat food deserts, giving small rural business owners the means to create sustainable grocery stores and uplift their communities. We can implement better ways to calculate the market size (like Voronoi and Reillys), include start-up costs while estimating the expense, and give users more information about other credible resources that can help them. We hope that our tool can benefit disadvantaged communities with low food access as well as bolster small business by encouraging investment from potential entrepreneurs.</p>
+<p>Through continuous improvement, our tool presents a significant opportunity to combat food deserts, giving small rural business owners the means to create sustainable grocery stores and uplift their communities. We can implement better ways to calculate the market size (like Voronoi polygons and Reilly’s law), include start-up costs while estimating the expense, and give users more information about other credible resources that can help them. We hope that our tool can benefit disadvantaged communities with low food access as well as bolster small business by encouraging investment from potential entrepreneurs.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Jewell-Market.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Jewell Market in Jewell, Iowa: A small town grocery store recently saved from closing its doors by young grocer Nick Graham in 2020.</figcaption>
+<figcaption class="figure-caption">Jewell Market in Jewell, Iowa: A small town grocery store <a href="https://www.winsightgrocerybusiness.com/retailers/iowa-town-reopen-jewell-market">recently saved from closing its doors</a> by young grocer Nick Graham in 2020.</figcaption>
 </figure>
 </div>
 

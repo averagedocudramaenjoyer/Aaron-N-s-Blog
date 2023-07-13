@@ -23,7 +23,7 @@ It has also been observed that the increased prevalence of dollar and convenient
 
 # Our Project
 
-We have teamed up with FFED ISU Extension and Outreach to produce an app to help potential grocery store owners find the right location for their store. Our hope is to help both entrepreneurs and consumers alike by aiding in the establishment of profitable stores to increase access to high quality food in areas where this access may be limited. We have created that an interactive map-based tool with potential rural grocery store owners in mind that lets them find optimal locations for their stores that are both profitable and enriching to these smaller communities.
+We have teamed up with FFED ISU Extension and Outreach to produce an app to help evaluate the feasibility of rural grocery stores based on their proposed location. Our hope is to help both entrepreneurs and consumers alike by aiding in the establishment of profitable stores and increasing access to high quality food in areas where this access may be limited.
 
 ![Farm, Food and Enterprise Development (ISU Extension and Outreach)](images/FFED.png)
 
@@ -39,43 +39,37 @@ The primary function of the tool is to take a user-specified location (in the fo
 
 ![DSPG Grocery Team hex sticker](images/DSPGrocery.png){width="327"}
 
-## Our Tools
+## Tools
 
 ### R
 
-One of the first decisions made was our choice of programming language. We decided to choose to use the R programming language for this project. Created by statisticians in 1993, R is a popular and effective language for data science and statistics. In addition, R has many great libraries for data visualization, such as ggplot2, that can help us effectively show relevant demographic data related to potential markets.
+We decided to use the R programming language for this project. Created by statisticians in 1993, R is a popular and effective language for data science and statistics. In addition, R has many great libraries for data visualization, such as ggplot2, that can help us effectively show relevant demographic data related to potential markets.
 
 ### R Shiny
 
-One of the advantages of R is that it grants us access to R Shiny, a package that allows for the creation of dynamic, easy-to-use data-driven web applications. Shiny apps can be easily incorporated into web pages and can take a variety of different types of user input. In addition, Shiny is highly compatible with packages such as leaflet for map displays and spatial analysis.
+One of the advantages of R is that it grants us access to [R Shiny](https://www.rstudio.com/products/shiny/), a package that allows for the creation of dynamic, easy-to-use data-driven web applications. Shiny apps can be easily incorporated into web pages and can take a variety of different types of user input. In addition, Shiny is highly compatible with packages such as leaflet for map displays and spatial analysis.
 
 ![](images/shiny.jpeg){width="470"}
 
-### Census Data
+### TidyCensus
 
-In addition, R gives us access to the TidyCensus, a package that makes it very easy to retrieve Census data for any location in the United States. TidyCensus acts as a channel for extracting specific data from the US Census Bureau database in a tidy format. This Census data is important for both our calculations and our data visualizations.
+In addition, R gives us access to the [TidyCensus](https://walker-data.com/tidycensus/), a package that makes it very easy to retrieve Census data for any location in the United States. TidyCensus acts as a channel for extracting specific data from the US Census Bureau database in a tidy format. This Census data is important for both our calculations and our data visualizations.
 
 ### Tigris
 
-Tigris is a package designed to help developers use Census Bureau TIGER/Line files. This is being used to find county and place info, and is being used to determine which cities are in the market area.
+[Tigris](https://www.rdocumentation.org/packages/tigris/versions/2.0.3) is a package designed to help developers use Census Bureau TIGER/Line files. This is being used to find county and place info, and is being used to determine which cities are in the market area.
 
 ### Google Geocoding API
 
-The Google Geocoding API is used to take an address and find the corresponding latitude and longitude for that address. This is used to help gather information about the communities around a given point on the map.
+[The Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview) is used to take an address and find the corresponding latitude and longitude for that address. This is used to help gather information about the communities around a given point on the map.
 
 ### Google Places API
 
-The Google Places API is being used to find nearby stores, and to convert addresses to GPS coordinates. These stores help to determine our market size ("buffer zone") and factor in the effect on competition on store profitability.
+[The Google Places API](https://developers.google.com/maps/documentation/places/web-service/overview) is being used to find nearby stores, and to convert addresses to GPS coordinates. These stores help to determine our market size ("buffer zone") and factor in the effect on competition on store profitability.
 
-## List of Data Sources
+### Data Sources
 
--   American Community Survey
-
--   U.S Decennial Census
-
--   Salesgenie
-
--   Google Places
+[List of Data Sources](https://dspg-2023.github.io/Grocery/articles/DataSourcesAndReferences.html).
 
 # Estimating Market Size
 
@@ -95,13 +89,13 @@ Cities Population is a function that finds all the nearby cities and finds the t
 
 ### Rural Population
 
-Rural_Pop is a function that finds the population of all people who live in the market area but do not live in a town. This is done by finding the population of the whole county, and subtracting the people who live in all the towns in that area, then multiplying by the percentage of the county the area covers.
+Rural Population is a function that finds the population of all people who live in the market area but do not live in a town. This is done by finding the population of the whole county, and subtracting the people who live in all the towns in that area, then multiplying by the percentage of the county the area covers.
 
 ## Market Area
 
 The area calculations used in our functions are derived by finding the distance to the nearest store in each quadrant (NE, NW, SE, SW). We divide that distance by two to account for the other store's market area, then we use that distance as the radius of a quarter circle to figure out how much reach the store has. A more elegant solution to this would be Voronoi polygons, Reilly's law of Retail Gravitation, or Huff's Model.
 
-## Future potential steps
+## Alternative Approaches to Determining Market Size
 
 ### Voronoi
 
@@ -317,14 +311,14 @@ This DSPG project produced the following as deliverables:
 
 -   Rural grocery stores profitability dashboard
 
--   The DSPG Grocery (DSPGrocery) R package containing the relevant functions for the tool
+-   [The DSPG Grocery (DSPGrocery) R package containing the relevant functions for the tool](https://github.com/DSPG-2023/Grocery)
 
--   Salesgenie Tableau Dashboard
+-   [Reference page for the DSPG Grocery package](https://dspg-2023.github.io/Grocery/)
 
--   Blogs that chronicle the team's progress
+-   [Blogs that chronicle the team's progress](https://dspg-2023.github.io/DSPG2023/allBlogs.html)
 
 # **Conclusion**
 
-Through continuous improvement, our tool presents a significant opportunity to combat food deserts, giving small rural business owners the means to create sustainable grocery stores and uplift their communities. We can implement better ways to calculate the market size (like Voronoi and Reillys), include start-up costs while estimating the expense, and give users more information about other credible resources that can help them. We hope that our tool can benefit disadvantaged communities with low food access as well as bolster small business by encouraging investment from potential entrepreneurs.
+Through continuous improvement, our tool presents a significant opportunity to combat food deserts, giving small rural business owners the means to create sustainable grocery stores and uplift their communities. We can implement better ways to calculate the market size (like Voronoi polygons and Reilly's law), include start-up costs while estimating the expense, and give users more information about other credible resources that can help them. We hope that our tool can benefit disadvantaged communities with low food access as well as bolster small business by encouraging investment from potential entrepreneurs.
 
-![Jewell Market in Jewell, Iowa: A small town grocery store recently saved from closing its doors by young grocer Nick Graham in 2020.](images/Jewell-Market.jpg)
+![Jewell Market in Jewell, Iowa: A small town grocery store [recently saved from closing its doors](https://www.winsightgrocerybusiness.com/retailers/iowa-town-reopen-jewell-market) by young grocer Nick Graham in 2020.](images/Jewell-Market.jpg)
