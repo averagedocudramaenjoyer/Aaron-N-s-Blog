@@ -107,24 +107,6 @@ Cities Population is all the nearby cities' populations. This function uses a Ti
 
 Rural Population is the population of all people who live in the market area but do not live in a town. This is calculated by finding the population of the whole county, and subtracting the people who live in all the towns in that area, then multiplying by the percentage of the county the area covers.
 
-## Future potential steps
-
-During our research process, we found several alternative of estimating market area, from both geometric and economic approaches. Voronoi diagrams are a more accurate implementation of the quarter circle approach. We also found Huff's Model and Reilly's Law of Retail Gravitation, which are models designed by economists to give an more accurate estimation of market size.
-
-### Voronoi
-
-A Voronoi diagram is a way of partitioning a plane into cells where all points within the cell are closer to a given seed, or in our case a store, than any other seed. Implementing these would be beneficial in order to get a more accurate model that scale to the number of neighboring stores.
-
-![](images/voronoi.png){fig-align="center"}
-
-### Reilly's
-
-Reilly's law is an economic principle that states that people are more drawn to areas with a higher population than those with smaller populations. This is an excellent way to estimate market area, but is somewhat complicated. Maps are usually edited by hand to account for geographic barriers such as rivers, and there are various limitations such as the populations of the two cities having to be relatively similar.
-
-### Huff's Model
-
-Huff's law is a probabilistic model for estimating consumer attraction. It states that the attractiveness of a store and something called distance decay determine the likelihood of someone visiting the store. Distance decay is the idea that as people move farther and farther away, the likelihood exponentially decreases that they would visit the store. In the real world this would mean that even though a store might be 10 times more attractive than another, if it is 10 times farther away, they most likely will not travel to it.
-
 # **Revenue Estimation**
 
 Estimating the revenue is important for calculating the overall profit of a store. The functions in this section of the package estimate the total revenue of a store using the estimated market size, three different shopper type categories, and the average per capita spending on groceries.
@@ -180,34 +162,6 @@ As primary shoppers do most of their shopping in that grocery store, the percent
 ## Total Revenue
 
 The function, `Total_Estimate_Revenue()` , calculates the final total estimated revenue by summing the outputs from the `Total_Spend_Primary_Shoppers()` , `Total_Spend_Secondary_Shoppers()` , and `Total_Spend_Rare_Shoppers()` .
-
-## Visualizing Rural Grocery Store Competition
-
-As discussed before, a shopper choosing a store as a primary store or not depends on a lot of other factors, such as the competition from the big chain grocery stores, other non-chain grocery stores, and dollar stores, which provides a shopper with cheaper alternatives. In order to understand how the store location and presence of competitors affect a store, we analyzed the Sales Genie's data on dollar stores and grocery stores in Iowa. We classified the cities in our data set according to the city group classification based on population and adjacency to a big city. This classification classifies the cities into these eight groups:
-
--   Group 1: 10,000 or greater Core county of a metropolitan statistical area (MSA) 
-
--   Group 2: 10,000 or greater Non-core MSA county or non-metropolitan county 
-
--   Group 3: 2,500 to 9,999 Non-metropolitan county 
-
--   Group 4: 2,500 to 9,999 Metropolitan county 
-
--   Group 5N: 500 to 2,499 Non-metropolitan county, not adjacent to an MSA
-
--   Group 5A: 500 to 2,499 Non-metropolitan county, adjacent to an MSA 
-
--   Group 6: 500 to 2,499 Metropolitan county 
-
--   Group 7: 250 to 499. Any county
-
--   Rest of State: 249 or fewer Any county 
-
-Of these, we specifically focused on the cities with a population of less than 2,500 and created a plot that shows the number of the different types of stores in each city group classification.
-
-![](images/srika_plot3-01.png){width="630"}
-
-We see that there are significantly less chain grocery stores in all of these cities with a population of less than 2,500. As we go more and more rural, the only competition in the city is from the other non-chain grocery stores in that area. The distribution of the sales volume for various non-chain grocery stores is also shown in the dashboard. These visualizations will help small rural grocery business owners to design their stores depending on the preexisting competition.
 
 # **Expense Estimation**
 
@@ -297,7 +251,9 @@ In the tool, the estimated expenses will be subtracted from the total estimated 
 
 Since the Bizminer/Vertical IQ percentages used in the calculations for the functions in this section are based on three-year averages, they will need to be updated annually.
 
-# **Demographic Information**
+# Additional Investigation
+
+## Demographic Information
 
 Data from the American Community Survey (2021) and the Decennial Census (2020) were pulled in order to display data visualizations relevant to food desert status and to the unique demographic features of a given location. This data is displayed in three bar plots and one data table inside a dashboard in the tool. Based on the market size around a user-specified address, the data is retrieved for the all of the counties that hold a city that resides within a circular buffer zone around that location.
 
@@ -315,11 +271,57 @@ Key variables shown for each county in the dashboard:
 
 In addition to purely economic metrics, its important to highlight the relationship between the proportion of racial and ethnic minorities in a community and food desert status. Moreover, having insight into the racial and cultural dynamics of a community allows potential owners to make more informed decisions about where their individual plans for stores are most likely to succeed (for example, a Mexican immigrant entrepreneur looking to open a small market that caters to Hispanics).
 
-![Plot showing the three most commonly spoken languages of each county other than English (2021)](images/language_plot2.png)
+![Plot showing the three most commonly spoken languages of each county other than English (2021)](images/language_plot2.png){alt="Plot showing the three most commonly spoken languages of each county other than English (2021)"}
 
 Since the data taken from the American Community Survey is based off of representative sampling, each of the bar plots display corresponding margin of error bars for each county's estimate. The estimate and the margin of error can also be found by hovering the cursor over each bar. The Race/Hispanic Origin Table, on the other hand, is taken from the Decennial Census and contains counts of the total population, thus lacking these error bars.
 
-# **Results**
+## Visualizing Rural Grocery Store Competition
+
+As discussed before, a shopper choosing a store as a primary store or not depends on a lot of other factors, such as the competition from the big chain grocery stores, other non-chain grocery stores, and dollar stores, which provides a shopper with cheaper alternatives. In order to understand how the store location and presence of competitors affect a store, we analyzed the Sales Genie's data on dollar stores and grocery stores in Iowa. We classified the cities in our data set according to the city group classification based on population and adjacency to a big city. This classification classifies the cities into these eight groups:
+
+-   Group 1: 10,000 or greater Core county of a metropolitan statistical area (MSA) 
+
+-   Group 2: 10,000 or greater Non-core MSA county or non-metropolitan county 
+
+-   Group 3: 2,500 to 9,999 Non-metropolitan county 
+
+-   Group 4: 2,500 to 9,999 Metropolitan county 
+
+-   Group 5N: 500 to 2,499 Non-metropolitan county, not adjacent to an MSA
+
+-   Group 5A: 500 to 2,499 Non-metropolitan county, adjacent to an MSA 
+
+-   Group 6: 500 to 2,499 Metropolitan county 
+
+-   Group 7: 250 to 499. Any county
+
+-   Rest of State: 249 or fewer Any county 
+
+Of these, we specifically focused on the cities with a population of less than 2,500 and created a plot that shows the number of the different types of stores in each city group classification.
+
+![](images/srika_plot3-01.png){width="630"}
+
+We see that there are significantly less chain grocery stores in all of these cities with a population of less than 2,500. As we go more and more rural, the only competition in the city is from the other non-chain grocery stores in that area. The distribution of the sales volume for various non-chain grocery stores is also shown in the dashboard. These visualizations will help small rural grocery business owners to design their stores depending on the preexisting competition.
+
+## Alternative Market Areas
+
+During our research process, we found several alternative of estimating market area, from both geometric and economic approaches. Voronoi diagrams are a more accurate implementation of the quarter circle approach. We also found Huff's Model and Reilly's Law of Retail Gravitation, which are models designed by economists to give an more accurate estimation of market size.
+
+### Voronoi
+
+A Voronoi diagram is a way of partitioning a plane into cells where all points within the cell are closer to a given seed, or in our case a store, than any other seed. Implementing these would be beneficial in order to get a more accurate model that scale to the number of neighboring stores.
+
+![](images/voronoi.png){fig-align="center"}
+
+### Reilly's
+
+Reilly's law is an economic principle that states that people are more drawn to areas with a higher population than those with smaller populations. This is an excellent way to estimate market area, but is somewhat complicated. Maps are usually edited by hand to account for geographic barriers such as rivers, and there are various limitations such as the populations of the two cities having to be relatively similar.
+
+### Huff's Model
+
+Huff's law is a probabilistic model for estimating consumer attraction. It states that the attractiveness of a store and something called distance decay determine the likelihood of someone visiting the store. Distance decay is the idea that as people move farther and farther away, the likelihood exponentially decreases that they would visit the store. In the real world this would mean that even though a store might be 10 times more attractive than another, if it is 10 times farther away, they most likely will not travel to it.
+
+# **Final Results**
 
 This DSPG project produced the following as deliverables:
 

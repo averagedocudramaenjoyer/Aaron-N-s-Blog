@@ -151,13 +151,11 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#estimating-market-size" id="toc-estimating-market-size" class="nav-link" data-scroll-target="#estimating-market-size">Estimating Market Size</a>
   <ul class="collapse">
   <li><a href="#market-population-size" id="toc-market-population-size" class="nav-link" data-scroll-target="#market-population-size">Market Population Size</a></li>
-  <li><a href="#future-potential-steps" id="toc-future-potential-steps" class="nav-link" data-scroll-target="#future-potential-steps">Future potential steps</a></li>
   </ul></li>
   <li><a href="#revenue-estimation" id="toc-revenue-estimation" class="nav-link" data-scroll-target="#revenue-estimation"><strong>Revenue Estimation</strong></a>
   <ul class="collapse">
   <li><a href="#average-per-capita-grocery-spending" id="toc-average-per-capita-grocery-spending" class="nav-link" data-scroll-target="#average-per-capita-grocery-spending">Average Per Capita Grocery Spending</a></li>
   <li><a href="#total-revenue" id="toc-total-revenue" class="nav-link" data-scroll-target="#total-revenue">Total Revenue</a></li>
-  <li><a href="#visualizing-rural-grocery-store-competition" id="toc-visualizing-rural-grocery-store-competition" class="nav-link" data-scroll-target="#visualizing-rural-grocery-store-competition">Visualizing Rural Grocery Store Competition</a></li>
   </ul></li>
   <li><a href="#expense-estimation" id="toc-expense-estimation" class="nav-link" data-scroll-target="#expense-estimation"><strong>Expense Estimation</strong></a>
   <ul class="collapse">
@@ -167,8 +165,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#pre-tax-profit" id="toc-pre-tax-profit" class="nav-link" data-scroll-target="#pre-tax-profit"><strong>Pre-Tax Profit</strong></a></li>
   <li><a href="#updates-and-maintenance" id="toc-updates-and-maintenance" class="nav-link" data-scroll-target="#updates-and-maintenance">Updates and Maintenance</a></li>
   </ul></li>
-  <li><a href="#demographic-information" id="toc-demographic-information" class="nav-link" data-scroll-target="#demographic-information"><strong>Demographic Information</strong></a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><strong>Results</strong></a></li>
+  <li><a href="#additional-investigation" id="toc-additional-investigation" class="nav-link" data-scroll-target="#additional-investigation">Additional Investigation</a>
+  <ul class="collapse">
+  <li><a href="#demographic-information" id="toc-demographic-information" class="nav-link" data-scroll-target="#demographic-information">Demographic Information</a></li>
+  <li><a href="#visualizing-rural-grocery-store-competition" id="toc-visualizing-rural-grocery-store-competition" class="nav-link" data-scroll-target="#visualizing-rural-grocery-store-competition">Visualizing Rural Grocery Store Competition</a></li>
+  <li><a href="#alternative-market-areas" id="toc-alternative-market-areas" class="nav-link" data-scroll-target="#alternative-market-areas">Alternative Market Areas</a></li>
+  </ul></li>
+  <li><a href="#final-results" id="toc-final-results" class="nav-link" data-scroll-target="#final-results"><strong>Final Results</strong></a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><strong>Conclusion</strong></a></li>
   </ul>
 </nav>
@@ -293,27 +296,6 @@ ul.task-list li input[type="checkbox"] {
 <p>Rural Population is the population of all people who live in the market area but do not live in a town. This is calculated by finding the population of the whole county, and subtracting the people who live in all the towns in that area, then multiplying by the percentage of the county the area covers.</p>
 </section>
 </section>
-<section id="future-potential-steps" class="level2">
-<h2 class="anchored" data-anchor-id="future-potential-steps">Future potential steps</h2>
-<p>During our research process, we found several alternative of estimating market area, from both geometric and economic approaches. Voronoi diagrams are a more accurate implementation of the quarter circle approach. We also found Huff’s Model and Reilly’s Law of Retail Gravitation, which are models designed by economists to give an more accurate estimation of market size.</p>
-<section id="voronoi" class="level3">
-<h3 class="anchored" data-anchor-id="voronoi">Voronoi</h3>
-<p>A Voronoi diagram is a way of partitioning a plane into cells where all points within the cell are closer to a given seed, or in our case a store, than any other seed. Implementing these would be beneficial in order to get a more accurate model that scale to the number of neighboring stores.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/voronoi.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</section>
-<section id="reillys" class="level3">
-<h3 class="anchored" data-anchor-id="reillys">Reilly’s</h3>
-<p>Reilly’s law is an economic principle that states that people are more drawn to areas with a higher population than those with smaller populations. This is an excellent way to estimate market area, but is somewhat complicated. Maps are usually edited by hand to account for geographic barriers such as rivers, and there are various limitations such as the populations of the two cities having to be relatively similar.</p>
-</section>
-<section id="huffs-model" class="level3">
-<h3 class="anchored" data-anchor-id="huffs-model">Huff’s Model</h3>
-<p>Huff’s law is a probabilistic model for estimating consumer attraction. It states that the attractiveness of a store and something called distance decay determine the likelihood of someone visiting the store. Distance decay is the idea that as people move farther and farther away, the likelihood exponentially decreases that they would visit the store. In the real world this would mean that even though a store might be 10 times more attractive than another, if it is 10 times farther away, they most likely will not travel to it.</p>
-</section>
-</section>
 </section>
 <section id="revenue-estimation" class="level1">
 <h1><strong>Revenue Estimation</strong></h1>
@@ -416,24 +398,6 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="total-revenue">Total Revenue</h2>
 <p>The function, <code>Total_Estimate_Revenue()</code> , calculates the final total estimated revenue by summing the outputs from the <code>Total_Spend_Primary_Shoppers()</code> , <code>Total_Spend_Secondary_Shoppers()</code> , and <code>Total_Spend_Rare_Shoppers()</code> .</p>
 </section>
-<section id="visualizing-rural-grocery-store-competition" class="level2">
-<h2 class="anchored" data-anchor-id="visualizing-rural-grocery-store-competition">Visualizing Rural Grocery Store Competition</h2>
-<p>As discussed before, a shopper choosing a store as a primary store or not depends on a lot of other factors, such as the competition from the big chain grocery stores, other non-chain grocery stores, and dollar stores, which provides a shopper with cheaper alternatives. In order to understand how the store location and presence of competitors affect a store, we analyzed the Sales Genie’s data on dollar stores and grocery stores in Iowa. We classified the cities in our data set according to the city group classification based on population and adjacency to a big city. This classification classifies the cities into these eight groups:</p>
-<ul>
-<li><p>Group 1: 10,000 or greater Core county of a metropolitan statistical area (MSA) </p></li>
-<li><p>Group 2: 10,000 or greater Non-core MSA county or non-metropolitan county </p></li>
-<li><p>Group 3: 2,500 to 9,999 Non-metropolitan county </p></li>
-<li><p>Group 4: 2,500 to 9,999 Metropolitan county </p></li>
-<li><p>Group 5N: 500 to 2,499 Non-metropolitan county, not adjacent to an MSA</p></li>
-<li><p>Group 5A: 500 to 2,499 Non-metropolitan county, adjacent to an MSA </p></li>
-<li><p>Group 6: 500 to 2,499 Metropolitan county </p></li>
-<li><p>Group 7: 250 to 499. Any county</p></li>
-<li><p>Rest of State: 249 or fewer Any county </p></li>
-</ul>
-<p>Of these, we specifically focused on the cities with a population of less than 2,500 and created a plot that shows the number of the different types of stores in each city group classification.</p>
-<p><img src="images/srika_plot3-01.png" class="img-fluid" width="630"></p>
-<p>We see that there are significantly less chain grocery stores in all of these cities with a population of less than 2,500. As we go more and more rural, the only competition in the city is from the other non-chain grocery stores in that area. The distribution of the sales volume for various non-chain grocery stores is also shown in the dashboard. These visualizations will help small rural grocery business owners to design their stores depending on the preexisting competition.</p>
-</section>
 </section>
 <section id="expense-estimation" class="level1">
 <h1><strong>Expense Estimation</strong></h1>
@@ -519,8 +483,10 @@ ul.task-list li input[type="checkbox"] {
 <p>Since the Bizminer/Vertical IQ percentages used in the calculations for the functions in this section are based on three-year averages, they will need to be updated annually.</p>
 </section>
 </section>
-<section id="demographic-information" class="level1">
-<h1><strong>Demographic Information</strong></h1>
+<section id="additional-investigation" class="level1">
+<h1>Additional Investigation</h1>
+<section id="demographic-information" class="level2">
+<h2 class="anchored" data-anchor-id="demographic-information">Demographic Information</h2>
 <p>Data from the American Community Survey (2021) and the Decennial Census (2020) were pulled in order to display data visualizations relevant to food desert status and to the unique demographic features of a given location. This data is displayed in three bar plots and one data table inside a dashboard in the tool. Based on the market size around a user-specified address, the data is retrieved for the all of the counties that hold a city that resides within a circular buffer zone around that location.</p>
 <p>Key variables shown for each county in the dashboard:</p>
 <ul>
@@ -539,8 +505,48 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>Since the data taken from the American Community Survey is based off of representative sampling, each of the bar plots display corresponding margin of error bars for each county’s estimate. The estimate and the margin of error can also be found by hovering the cursor over each bar. The Race/Hispanic Origin Table, on the other hand, is taken from the Decennial Census and contains counts of the total population, thus lacking these error bars.</p>
 </section>
-<section id="results" class="level1">
-<h1><strong>Results</strong></h1>
+<section id="visualizing-rural-grocery-store-competition" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-rural-grocery-store-competition">Visualizing Rural Grocery Store Competition</h2>
+<p>As discussed before, a shopper choosing a store as a primary store or not depends on a lot of other factors, such as the competition from the big chain grocery stores, other non-chain grocery stores, and dollar stores, which provides a shopper with cheaper alternatives. In order to understand how the store location and presence of competitors affect a store, we analyzed the Sales Genie’s data on dollar stores and grocery stores in Iowa. We classified the cities in our data set according to the city group classification based on population and adjacency to a big city. This classification classifies the cities into these eight groups:</p>
+<ul>
+<li><p>Group 1: 10,000 or greater Core county of a metropolitan statistical area (MSA) </p></li>
+<li><p>Group 2: 10,000 or greater Non-core MSA county or non-metropolitan county </p></li>
+<li><p>Group 3: 2,500 to 9,999 Non-metropolitan county </p></li>
+<li><p>Group 4: 2,500 to 9,999 Metropolitan county </p></li>
+<li><p>Group 5N: 500 to 2,499 Non-metropolitan county, not adjacent to an MSA</p></li>
+<li><p>Group 5A: 500 to 2,499 Non-metropolitan county, adjacent to an MSA </p></li>
+<li><p>Group 6: 500 to 2,499 Metropolitan county </p></li>
+<li><p>Group 7: 250 to 499. Any county</p></li>
+<li><p>Rest of State: 249 or fewer Any county </p></li>
+</ul>
+<p>Of these, we specifically focused on the cities with a population of less than 2,500 and created a plot that shows the number of the different types of stores in each city group classification.</p>
+<p><img src="images/srika_plot3-01.png" class="img-fluid" width="630"></p>
+<p>We see that there are significantly less chain grocery stores in all of these cities with a population of less than 2,500. As we go more and more rural, the only competition in the city is from the other non-chain grocery stores in that area. The distribution of the sales volume for various non-chain grocery stores is also shown in the dashboard. These visualizations will help small rural grocery business owners to design their stores depending on the preexisting competition.</p>
+</section>
+<section id="alternative-market-areas" class="level2">
+<h2 class="anchored" data-anchor-id="alternative-market-areas">Alternative Market Areas</h2>
+<p>During our research process, we found several alternative of estimating market area, from both geometric and economic approaches. Voronoi diagrams are a more accurate implementation of the quarter circle approach. We also found Huff’s Model and Reilly’s Law of Retail Gravitation, which are models designed by economists to give an more accurate estimation of market size.</p>
+<section id="voronoi" class="level3">
+<h3 class="anchored" data-anchor-id="voronoi">Voronoi</h3>
+<p>A Voronoi diagram is a way of partitioning a plane into cells where all points within the cell are closer to a given seed, or in our case a store, than any other seed. Implementing these would be beneficial in order to get a more accurate model that scale to the number of neighboring stores.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/voronoi.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="reillys" class="level3">
+<h3 class="anchored" data-anchor-id="reillys">Reilly’s</h3>
+<p>Reilly’s law is an economic principle that states that people are more drawn to areas with a higher population than those with smaller populations. This is an excellent way to estimate market area, but is somewhat complicated. Maps are usually edited by hand to account for geographic barriers such as rivers, and there are various limitations such as the populations of the two cities having to be relatively similar.</p>
+</section>
+<section id="huffs-model" class="level3">
+<h3 class="anchored" data-anchor-id="huffs-model">Huff’s Model</h3>
+<p>Huff’s law is a probabilistic model for estimating consumer attraction. It states that the attractiveness of a store and something called distance decay determine the likelihood of someone visiting the store. Distance decay is the idea that as people move farther and farther away, the likelihood exponentially decreases that they would visit the store. In the real world this would mean that even though a store might be 10 times more attractive than another, if it is 10 times farther away, they most likely will not travel to it.</p>
+</section>
+</section>
+</section>
+<section id="final-results" class="level1">
+<h1><strong>Final Results</strong></h1>
 <p>This DSPG project produced the following as deliverables:</p>
 <ul>
 <li><p>Rural grocery stores profitability dashboard</p></li>
