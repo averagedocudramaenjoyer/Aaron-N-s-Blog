@@ -4,6 +4,9 @@ author: "Aaron Null, Alex Cory, Srika Raja and Harun Celik"
 date: "2023-07-14"
 categories: "Final"
 theme: minty
+toc: true
+toc-depth: 2
+toc_title: "Contents"
 ---
 
 ![](images/Grocery_team_banner.png)
