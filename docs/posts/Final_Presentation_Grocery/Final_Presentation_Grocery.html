@@ -152,6 +152,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#estimating-market-size" id="toc-estimating-market-size" class="nav-link" data-scroll-target="#estimating-market-size">Estimating Market Size</a>
   <ul class="collapse">
   <li><a href="#population-functions" id="toc-population-functions" class="nav-link" data-scroll-target="#population-functions">Population Functions</a></li>
+  <li><a href="#market-area" id="toc-market-area" class="nav-link" data-scroll-target="#market-area">Market Area</a></li>
   <li><a href="#future-potential-steps" id="toc-future-potential-steps" class="nav-link" data-scroll-target="#future-potential-steps">Future potential steps</a></li>
   </ul></li>
   <li><a href="#revenue-estimation" id="toc-revenue-estimation" class="nav-link" data-scroll-target="#revenue-estimation"><strong>Revenue Estimation</strong></a>
@@ -270,14 +271,17 @@ ul.task-list li input[type="checkbox"] {
 <section id="rural-population" class="level3">
 <h3 class="anchored" data-anchor-id="rural-population">Rural Population</h3>
 <p>Rural_Pop is a function that finds the population of all people who live in the market area but do not live in a town. This is done by finding the population of the whole county, and subtracting the people who live in all the towns in that area, then multiplying by the percentage of the county the area covers.</p>
-<p>The area calculations used in our functions are derived by finding the distance to the nearest store in each quadrant (NE, NW, SE, SW). We use that distance as the radius of a quarter circle to figure out how much reach the store has. This is a rudimentary way of determining the market region as the only thing it takes into account is distance to the closest store. This method ignores the radius that the other store would have. A more elegant solution to this would be Voronoi polygons, Reilly’s law of Retail Gravitation, or Huff’s Model.</p>
 </section>
+</section>
+<section id="market-area" class="level2">
+<h2 class="anchored" data-anchor-id="market-area">Market Area</h2>
+<p>The area calculations used in our functions are derived by finding the distance to the nearest store in each quadrant (NE, NW, SE, SW). We divide that distance by two to account for the other store’s market area, then we use that distance as the radius of a quarter circle to figure out how much reach the store has. A more elegant solution to this would be Voronoi polygons, Reilly’s law of Retail Gravitation, or Huff’s Model.</p>
 </section>
 <section id="future-potential-steps" class="level2">
 <h2 class="anchored" data-anchor-id="future-potential-steps">Future potential steps</h2>
 <section id="voronoi" class="level3">
 <h3 class="anchored" data-anchor-id="voronoi">Voronoi</h3>
-<p>A Voronoi diagram is a way of partitioning a plane into cells where all points within the cell are closer to a given seed, or in our case a store, than any other seed. Implementing these would be beneficial in order to get a more accurate model that would account for the other stores market area.</p>
+<p>A Voronoi diagram is a way of partitioning a plane into cells where all points within the cell are closer to a given seed, or in our case a store, than any other seed. Implementing these would be beneficial in order to get a more accurate model that scale to the number of neighboring stores.</p>
 <p><img src="images/voronoi.png" class="img-fluid"></p>
 </section>
 <section id="reillys" class="level3">

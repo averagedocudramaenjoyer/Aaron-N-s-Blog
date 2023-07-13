@@ -97,13 +97,15 @@ Cities Population is a function that finds all the nearby cities and finds the t
 
 Rural_Pop is a function that finds the population of all people who live in the market area but do not live in a town. This is done by finding the population of the whole county, and subtracting the people who live in all the towns in that area, then multiplying by the percentage of the county the area covers.
 
-The area calculations used in our functions are derived by finding the distance to the nearest store in each quadrant (NE, NW, SE, SW). We use that distance as the radius of a quarter circle to figure out how much reach the store has. This is a rudimentary way of determining the market region as the only thing it takes into account is distance to the closest store. This method ignores the radius that the other store would have. A more elegant solution to this would be Voronoi polygons, Reilly's law of Retail Gravitation, or Huff's Model.
+## Market Area
+
+The area calculations used in our functions are derived by finding the distance to the nearest store in each quadrant (NE, NW, SE, SW). We divide that distance by two to account for the other store's market area, then we use that distance as the radius of a quarter circle to figure out how much reach the store has. A more elegant solution to this would be Voronoi polygons, Reilly's law of Retail Gravitation, or Huff's Model.
 
 ## Future potential steps
 
 ### Voronoi
 
-A Voronoi diagram is a way of partitioning a plane into cells where all points within the cell are closer to a given seed, or in our case a store, than any other seed. Implementing these would be beneficial in order to get a more accurate model that would account for the other stores market area.
+A Voronoi diagram is a way of partitioning a plane into cells where all points within the cell are closer to a given seed, or in our case a store, than any other seed. Implementing these would be beneficial in order to get a more accurate model that scale to the number of neighboring stores.
 
 ![](images/voronoi.png)
 
