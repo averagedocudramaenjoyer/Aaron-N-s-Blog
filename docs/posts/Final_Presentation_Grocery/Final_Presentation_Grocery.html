@@ -148,22 +148,20 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#tools" id="toc-tools" class="nav-link" data-scroll-target="#tools">Tools</a></li>
   </ul></li>
-  <li><a href="#estimating-market-size" id="toc-estimating-market-size" class="nav-link" data-scroll-target="#estimating-market-size">Estimating Market Size</a></li>
-  <li><a href="#estimating-market-size-1" id="toc-estimating-market-size-1" class="nav-link" data-scroll-target="#estimating-market-size-1">Estimating Market Size</a>
+  <li><a href="#estimating-market-size" id="toc-estimating-market-size" class="nav-link" data-scroll-target="#estimating-market-size">Estimating Market Size</a>
   <ul class="collapse">
-  <li><a href="#population-functions" id="toc-population-functions" class="nav-link" data-scroll-target="#population-functions">Population Functions</a></li>
-  <li><a href="#market-area" id="toc-market-area" class="nav-link" data-scroll-target="#market-area">Market Area</a></li>
+  <li><a href="#market-population-size" id="toc-market-population-size" class="nav-link" data-scroll-target="#market-population-size">Market Population Size</a></li>
   <li><a href="#future-potential-steps" id="toc-future-potential-steps" class="nav-link" data-scroll-target="#future-potential-steps">Future potential steps</a></li>
   </ul></li>
   <li><a href="#revenue-estimation" id="toc-revenue-estimation" class="nav-link" data-scroll-target="#revenue-estimation"><strong>Revenue Estimation</strong></a>
   <ul class="collapse">
   <li><a href="#average-per-capita-grocery-spending" id="toc-average-per-capita-grocery-spending" class="nav-link" data-scroll-target="#average-per-capita-grocery-spending">Average Per Capita Grocery Spending</a></li>
   <li><a href="#total-revenue" id="toc-total-revenue" class="nav-link" data-scroll-target="#total-revenue">Total Revenue</a></li>
-  <li><a href="#grocery-sales-visualizations" id="toc-grocery-sales-visualizations" class="nav-link" data-scroll-target="#grocery-sales-visualizations">Grocery Sales Visualizations:</a></li>
+  <li><a href="#visualizing-rural-grocery-store-competition" id="toc-visualizing-rural-grocery-store-competition" class="nav-link" data-scroll-target="#visualizing-rural-grocery-store-competition">Visualizing Rural Grocery Store Competition</a></li>
   </ul></li>
   <li><a href="#expense-estimation" id="toc-expense-estimation" class="nav-link" data-scroll-target="#expense-estimation"><strong>Expense Estimation</strong></a>
   <ul class="collapse">
-  <li><a href="#bizminervertical-iq-percentages" id="toc-bizminervertical-iq-percentages" class="nav-link" data-scroll-target="#bizminervertical-iq-percentages"><strong>Bizminer/Vertical IQ Percentages</strong></a></li>
+  <li><a href="#bizminervertical-iq-percentages" id="toc-bizminervertical-iq-percentages" class="nav-link" data-scroll-target="#bizminervertical-iq-percentages">Bizminer/Vertical IQ Percentages</a></li>
   <li><a href="#categories-of-expenses" id="toc-categories-of-expenses" class="nav-link" data-scroll-target="#categories-of-expenses"><strong>Categories of Expenses</strong></a></li>
   <li><a href="#secondary-sources-of-income" id="toc-secondary-sources-of-income" class="nav-link" data-scroll-target="#secondary-sources-of-income"><strong>Secondary Sources of Income</strong></a></li>
   <li><a href="#pre-tax-profit" id="toc-pre-tax-profit" class="nav-link" data-scroll-target="#pre-tax-profit"><strong>Pre-Tax Profit</strong></a></li>
@@ -196,7 +194,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="our-project" class="level1">
 <h1>Our Project</h1>
-<p>We have teamed up with FFED ISU Extension and Outreach to produce an app to help evaluate the feasibility of rural grocery stores based on their proposed location. Our hope is to help both entrepreneurs and consumers alike by aiding in the establishment of profitable stores and increasing access to high quality food in areas where this access may be limited.</p>
+<p>We have teamed up with FFED ISU Extension and Outreach to produce an app to help evaluate the feasibility of rural grocery stores based on their proposed location. The University of Minnesota characterizes rural grocery stores as “anchor businesses in communities of 2,500 or fewer residents that provide a full range of fresh, frozen and shelf-stable foods”. Our hope is to help both entrepreneurs and consumers alike by aiding in the establishment of profitable rural stores and increasing access to high quality food in areas where this access may be limited.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/FFED.png" class="img-fluid figure-img"></p>
@@ -251,27 +249,30 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="estimating-market-size" class="level1">
 <h1>Estimating Market Size</h1>
-</section>
-<section id="estimating-market-size-1" class="level1">
-<h1>Estimating Market Size</h1>
 <p>One of the main functions of the app is estimating the market size, so we can figure out how many people would potentially shop at the proposed store. Using geospatial and demographic data we were able to make a model to generally estimate how many shoppers might be in the store’s market area.</p>
-<blockquote class="blockquote">
-<img src="images/Map_Demo.png" class="img-fluid" alt="This is the map being generated by the R Shiny script after being given an address. Blue regions denote city boundaries, and green circles show store locations.">
-</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Map_Demo.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">This is the map being generated by the R Shiny script after being given an address. Blue regions denote city boundaries, and green circles show store locations.</figcaption>
+</figure>
+</div>
 <p>The estimating market size section is broken down into three main components: metro population, rural population, and cities population.</p>
-<section id="population-functions" class="level2">
-<h2 class="anchored" data-anchor-id="population-functions">Population Functions</h2>
-<section id="tidycensus-1" class="level3">
-<h3 class="anchored" data-anchor-id="tidycensus-1">TidyCensus</h3>
+<section id="market-population-size" class="level2">
+<h2 class="anchored" data-anchor-id="market-population-size">Market Population Size</h2>
+<section id="market-area" class="level3">
+<h3 class="anchored" data-anchor-id="market-area">Market Area</h3>
+<p>The area calculations used in our functions are derived by finding the distance to the nearest store in each quadrant (NE, NW, SE, SW). In order to find distance to each store, the Haversine equation is being used. The Haversine equation is a method used to find distance between two GPS coordinates, while factoring in the curvature of the Earth. We divide that distance by two to account for the other store’s market area, then we use that distance as the radius of a quarter circle to figure out how much reach the store has. A more elegant solution to this would be Voronoi polygons, Reilly’s Law of Retail Gravitation, or Huff’s Model.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Law-of-haversines.png" class="img-fluid figure-img" width="300"></p>
+<figcaption class="figure-caption">This is a visualization of the Haversine formula on a sphere.</figcaption>
+</figure>
+</div>
+</section>
+<section id="retrieving-population-data" class="level3">
+<h3 class="anchored" data-anchor-id="retrieving-population-data">Retrieving Population Data</h3>
 <p>TidyCensus is a package that allows developers to easily retrieve and work with data from the US Census Bureau. The Census Bureau conducts the decennial census every ten years, which is a complete count of the population. They also do a annual survey called the American Community Survey, which is a sample of the population taken with a greater level of socioeconomic detail.</p>
 </section>
-</section>
-<section id="market-area" class="level2">
-<h2 class="anchored" data-anchor-id="market-area">Market Area</h2>
-<p>The area calculations used in our functions are derived by finding the distance to the nearest store in each quadrant (NE, NW, SE, SW). In order to find distance to each store, the Haversine equation is being used. The Haversine equation is a method used to find distance between two GPS coordinates, while factoring in the curvature of the Earth. We divide that distance by two to account for the other store’s market area, then we use that distance as the radius of a quarter circle to figure out how much reach the store has. A more elegant solution to this would be Voronoi polygons, Reilly’s Law of Retail Gravitation, or Huff’s Model.</p>
-<blockquote class="blockquote">
-<img src="images/Law-of-haversines.png" class="img-fluid" width="300" alt="This is a visualization of the Haversine formula on a sphere.">
-</blockquote>
 <section id="metro-population" class="level3">
 <h3 class="anchored" data-anchor-id="metro-population">Metro Population</h3>
 <p>Metro Population is the population of the city that the potential store would be in. This function uses the parsed address to select just the city the store is out of a data frame containing the population of all the towns in the county that the store is in.</p>
@@ -408,8 +409,8 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="total-revenue">Total Revenue</h2>
 <p>The function, <code>Total_Estimate_Revenue()</code> , calculates the final total estimated revenue by summing the outputs from the <code>Total_Spend_Primary_Shoppers()</code> , <code>Total_Spend_Secondary_Shoppers()</code> , and <code>Total_Spend_Rare_Shoppers()</code> .</p>
 </section>
-<section id="grocery-sales-visualizations" class="level2">
-<h2 class="anchored" data-anchor-id="grocery-sales-visualizations">Grocery Sales Visualizations:</h2>
+<section id="visualizing-rural-grocery-store-competition" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-rural-grocery-store-competition">Visualizing Rural Grocery Store Competition</h2>
 <p>As discussed before, a shopper choosing a store as a primary store or not depends on a lot of other factors, such as the competition from the big chain grocery stores, other non-chain grocery stores, and dollar stores, which provides a shopper with cheaper alternatives. In order to understand how the store location and presence of competitors affect a store, we analyzed the Sales Genie’s data on dollar stores and grocery stores in Iowa. We classified the cities in our data set according to the city group classification based on population and adjacency to a big city. This classification classifies the cities into these eight groups:</p>
 <ul>
 <li><p>Group 1: 10,000 or greater Core county of a metropolitan statistical area (MSA) </p></li>
@@ -423,7 +424,7 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Rest of State: 249 or fewer Any county </p></li>
 </ul>
 <p>Of these, we specifically focused on the cities with a population of less than 2,500 and created a plot that shows the number of the different types of stores in each city group classification.</p>
-<p><img src="images/srika_plotly_2.png" class="img-fluid"></p>
+<p><img src="images/srika_plot3-01.png" class="img-fluid" width="630"></p>
 <p>We see that there are significantly less chain grocery stores in all of these cities with a population of less than 2,500. As we go more and more rural, the only competition in the city is from the other non-chain grocery stores in that area. The distribution of the sales volume for various non-chain grocery stores is also shown in the dashboard. These visualizations will help small rural grocery business owners to design their stores depending on the preexisting competition.</p>
 </section>
 </section>
@@ -431,8 +432,8 @@ ul.task-list li input[type="checkbox"] {
 <h1><strong>Expense Estimation</strong></h1>
 <p>One essential element of the calculation for store profitability is the estimation for the various expenses that a potential owner will have to contend with when they open their store. This tool allows for users to test the profitability of different budgetary percentages of various expense categories for grocery stores to help determine the resources necessary for a store to succeed in a given area.</p>
 <section id="bizminervertical-iq-percentages" class="level2">
-<h2 class="anchored" data-anchor-id="bizminervertical-iq-percentages"><strong>Bizminer/Vertical IQ Percentages</strong></h2>
-<p>Many of the functions used in this package incorporate percentages taken from both Bizminer and Vertical IQ, two financial analysis and market research firms. The value of these percentages determine how much of the total estimated revenue will be spent on a given category of expense. These percentages are based on industry 3-year averages for grocery stores as of 2022. In this tool, these default percentages are derived from each of the averages taken from Bizminer and Vertical IQ’s individual 3-year averages for every expense category. Although the user has the freedom to choose their own percentage via sliders in the side panel, these Bizminer/Vertical IQ percentages are set as defaults.</p>
+<h2 class="anchored" data-anchor-id="bizminervertical-iq-percentages">Bizminer/Vertical IQ Percentages</h2>
+<p>Many of the functions used in this package incorporate percentages taken from both <a href="https://bizminer.com">Bizminer</a> and <a href="https://verticaliq.com">Vertical IQ</a>, two financial analysis and market research firms, that determine how much of the total estimated revenue will be spent on a given category of expense. These percentages are based off of industry 3-year averages for grocery stores as of 2022. In this tool, these default percentages are the averages taken from Bizminer and Vertical IQ’s individual 3-year averages. Although the user has the freedom to choose their own percentage via sliders in the side panel, these Bizminer/Vertical IQ percentages are set as defaults.</p>
 </section>
 <section id="categories-of-expenses" class="level2">
 <h2 class="anchored" data-anchor-id="categories-of-expenses"><strong>Categories of Expenses</strong></h2>
@@ -540,6 +541,12 @@ ul.task-list li input[type="checkbox"] {
 <li><p><a href="https://dspg-2023.github.io/Grocery/">Reference page for the DSPG Grocery package</a></p></li>
 <li><p><a href="https://dspg-2023.github.io/DSPG2023/allBlogs.html">Blogs that chronicle the team’s progress</a></p></li>
 </ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/shinyapp.png" class="img-fluid figure-img" width="1920"></p>
+<figcaption class="figure-caption">The user interface of the DSPG Grocery Shiny app</figcaption>
+</figure>
+</div>
 </section>
 <section id="conclusion" class="level1">
 <h1><strong>Conclusion</strong></h1>
