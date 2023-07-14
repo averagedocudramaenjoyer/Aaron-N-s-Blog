@@ -107,7 +107,7 @@ Cities Population is all the nearby cities' populations. This function uses a Ti
 
 Rural Population is the population of all people who live in the market area but do not live in a town. This is calculated by finding the population of the whole county, and subtracting the people who live in all the towns in that area, then multiplying by the percentage of the county the area covers.
 
-# **Revenue Estimation**
+# Estimating Revenue
 
 Estimating the revenue is important for calculating the overall profit of a store. The functions in this section of the package estimate the total revenue of a store using the estimated market size, three different shopper type categories, and the average per capita spending on groceries.
 
@@ -163,7 +163,7 @@ As primary shoppers do most of their shopping in that grocery store, the percent
 
 The function, `Total_Estimate_Revenue()` , calculates the final total estimated revenue by summing the outputs from the `Total_Spend_Primary_Shoppers()` , `Total_Spend_Secondary_Shoppers()` , and `Total_Spend_Rare_Shoppers()` .
 
-# **Expense Estimation**
+# Estimating Expense
 
 One essential element of the calculation for store profitability is the estimation for the various expenses that a potential owner will have to contend with when they open their store. This tool allows for users to test the profitability of different budgetary percentages of various expense categories for grocery stores to help determine the resources necessary for a store to succeed in a given area.
 
